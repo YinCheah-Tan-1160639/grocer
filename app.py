@@ -1,6 +1,6 @@
 from flask import Flask
 from database import db
-from connect import DB_PASS
+from connect import DB_USER, DB_PASS, DB_NAME, DB_HOST, DB_PORT
 from seed import insert_test_data
 
 def register_blueprints(app):
@@ -15,7 +15,7 @@ def create_app():
 
     # Configure database URI
     app.config["SQLALCHEMY_DATABASE_URI"] =\
-        f"mysql://root:{DB_PASS}@localhost:3306/fresh_harvest"
+        f"mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle' : 280}
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
