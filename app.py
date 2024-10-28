@@ -16,6 +16,7 @@ def create_app():
     # Configure database URI
     app.config["SQLALCHEMY_DATABASE_URI"] =\
         f"mysql://root:{DB_PASS}@localhost:3306/fresh_harvest"
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle' : 280}
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
     # Bind SQLAlchemy to the app
