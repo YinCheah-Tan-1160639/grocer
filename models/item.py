@@ -1,5 +1,4 @@
 from . import db
-from decimal import Decimal
 
 # # Association table used to define many-to-many relationship
 # box_content = db.Table("box_content", 
