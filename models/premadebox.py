@@ -70,7 +70,10 @@ class PremadeBox(Item):
         self._no_of_boxes = new_no_of_boxes
 
     def calculate_item_subtotal(self):
-        """Calculate subtotal for the number of boxes ordered."""
+        """! Calculate subtotal for the number of boxes ordered.
+        
+        @return The subtotal of item line.
+        """
         return self.price * self.no_of_boxes
 
 #     @classmethod
@@ -98,16 +101,16 @@ class PremadeBox(Item):
         """
         pass
 
-    # def price_display(self) -> str:
-    #     """! Return the price display of the premade box. Example: $15.00 per box.
+    def price_display(self) -> str:
+        """! Return the price display of the premade box. Example: $15.00 per box.
         
-    #     @return A string representing the price per box.
-    #     """
-    #     pass
+        @return A string representing the price per box.
+        """
+        return f"${self.price_per_box:.2f} per box"
 
     def __str__(self) -> str:
         """! To get the string representation of the Premade box object.
         
         @return The premadebox object as a string including name and price.
         """
-        return f"{self.size.capitalize()} box: ${self.price_per_box} per box"
+        return f"{self.size.capitalize()} box: {self.price_display()}"

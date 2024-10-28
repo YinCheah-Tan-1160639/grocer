@@ -13,6 +13,7 @@ from .staff import Staff
 from .customer import Customer
 from .corporate_customer import CorporateCustomer
 from .item import Item
+from .vegetable import Vegetable
 
 __all__ = [
     'db', 
@@ -20,5 +21,6 @@ __all__ = [
     'Staff', 
     'Customer', 
     'CorporateCustomer', 
-    'Item'
+    'Item', 
+    'Vegetable'
 ]
