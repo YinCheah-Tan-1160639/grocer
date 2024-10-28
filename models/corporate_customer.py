@@ -8,7 +8,7 @@ class CorporateCustomer(Customer):
     __tablename__ = 'corporate_customer'
 
     # Class attribute
-    discount_rate: Decimal = Decimal('0.1') # 10 percent --> was placed in order model in part 1
+    # discount_rate: Decimal = Decimal('0.1') # 10 percent --> was placed in order model in part 1
 
     id: int = db.Column(db.Integer, db.ForeignKey('customer.id'), primary_key=True)
     _company_name: str = db.Column(db.String(100), nullable=False)

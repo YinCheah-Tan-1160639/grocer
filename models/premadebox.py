@@ -1,4 +1,4 @@
-from . import db, Item
+from . import db, Item, Vegetable
 from decimal import Decimal
 
 class PremadeBox(Item):
@@ -11,15 +11,14 @@ class PremadeBox(Item):
     _no_of_boxes: int = db.Column(db.Integer, nullable=False)
 
     __mapper_args__ = {
-        'polymorphic_identity': 'premade_box'
+        'polymorphic_identity': 'premadebox'
     }
 
-#     # Add relationship to vegetables associated with the premade_box
-#     vegetables: "Vegetable" = db.relationship(
-#         'Vegetable', 
-#         secondary='box_content',  # Association table
-#         back_populates='premade_box'
-#     )
+    # Add relationship to vegetables associated with the premade_box
+    vegetables: "Vegetable" = db.relationship(
+        'Vegetable', 
+        back_populates='premadebox'
+    )
 
     @property
     def size(self) -> str:
