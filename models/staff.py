@@ -8,7 +8,7 @@ class Staff(Person):
 
     __tablename__ = 'staff'
 
-    _id: int = db.Column(db.Integer, db.ForeignKey('person._id'), primary_key=True, autoincrement=True)
+    id: int = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True, autoincrement=True)
     _position: str = db.Column(db.String(255), nullable=False)
     _department: str = db.Column(db.String(255), nullable=False)
     _date_joined = db.Column(db.Date, nullable=False)
@@ -17,13 +17,13 @@ class Staff(Person):
         'polymorphic_identity': 'staff'
     }
 
-    @property
-    def id(self) -> int:
-        """! Method to get the staff id.
+    # @property
+    # def id(self) -> int:
+    #     """! Method to get the staff id.
 
-        @return The id of the staff as an integer.
-        """
-        return self._id
+    #     @return The id of the staff as an integer.
+    #     """
+    #     return self._id
 
     @property
     def position(self) -> str:
@@ -78,7 +78,7 @@ class Staff(Person):
         
         @return The staff object as a string.
         """
-        return f"<Name: {self.fullname()}, role: staff>"
+        return f"<Name: {self.fullname()}, Role: Staff>"
 
     # # list of customers
     # @staticmethod

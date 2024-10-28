@@ -8,7 +8,7 @@
 from app import db  # Import db from app.py
 from .person import Person
 from .staff import Staff
-# from .customer import Customer
-# from .corporate_customer import CorporateCustomer
+from .customer import Customer
+from .corporate_customer import CorporateCustomer
 
 __all__ = ['db', 'Person', 'Staff', 'Customer', 'CorporateCustomer']

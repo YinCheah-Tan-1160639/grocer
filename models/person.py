@@ -4,9 +4,10 @@ from datetime import datetime
 
 class Person(db.Model):
     """! The class representing a person."""
+
     __tablename__ = 'person'
 
-    _id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     _first_name = db.Column(db.String(50), nullable=False)
     _family_name = db.Column(db.String(50), nullable=False)
     _phone = db.Column(db.String(11), nullable=False)
@@ -22,13 +23,13 @@ class Person(db.Model):
         'polymorphic_on': _type
     }
 
-    @property
-    def id(self) -> int:
-        """! Method to get the person's ID.
+    # @property
+    # def id(self) -> int:
+    #     """! Method to get the person's ID.
         
-        @return The ID as an int.
-        """
-        return self._id
+    #     @return The ID as an int.
+    #     """
+    #     return self.id
     
     @property
     def first_name(self) -> str:
@@ -126,7 +127,7 @@ class Person(db.Model):
     @property
     def created_at(self) -> datetime:
         """Method to get the time when the person is created."""
-        return self.__created_at
+        return self._created_at
     
     @property
     def type(self) -> str:
@@ -134,10 +135,10 @@ class Person(db.Model):
         return self._type
     
     def __str__(self) -> str:
-        return f"<Name: {self.fullname()}, Role: {self._type}>"
+        return f"<Name: {self.fullname()}, Role: {self.type}>"
     
     def fullname(self) -> str:
-        return f"{self._first_name} {self._family_name}"
+        return f"{self.first_name} {self.family_name}"
     
     def check_password(self, password) -> bool:
         """Checks the hashed password against a provided password."""
