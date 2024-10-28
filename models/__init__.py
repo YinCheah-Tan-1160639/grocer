@@ -5,7 +5,7 @@
 
 # __all__ = ['Order', 'Payment', 'Item']
 
-from app import db  # Import db from app.py
+from run import db  # Import db from app.py
 from .person import Person
 from .staff import Staff
 # from .customer import Customer
