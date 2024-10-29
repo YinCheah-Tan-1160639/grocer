@@ -10,7 +10,7 @@ class PremadeBox(Item):
     _price_per_box = db.Column(db.Numeric(10, 2), nullable=False)
     _no_of_boxes = db.Column(db.Integer, nullable=False)
     # Add relationship to vegetables associated with the premadebox
-    vegetables = db.relationship('Vegetable', back_populates='premadebox')
+    vegetables = db.relationship('Vegetable', back_populates='premadebox', foreign_keys=[Vegetable._premadebox_id])
 
     __mapper_args__ = {
         'polymorphic_identity': 'premadebox'

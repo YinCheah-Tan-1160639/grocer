@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 from sqlalchemy.sql import func
-from . import db, Customer, OrderLine, Payment
+from . import db, Customer
 
 
 class Order(db.Model):
@@ -17,14 +17,15 @@ class Order(db.Model):
     # The maximum delivery distance allowed.
     _max_delivery_distance = 20 # kilometres
     
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     _date = db.Column(db.DateTime(timezone=True), server_default=func.now())
     _is_delivery = db.Column(db.Boolean, nullable=False, default=False)
-    _submitted = db.Column(db.Boolean, nullable=False, default=False)
+    _is_submitted = db.Column(db.Boolean, nullable=False, default=False) # checked out
+    _is_charge_to_account = db.Column(db.Boolean, nullable=False, default=False)
     _status = db.Column(db.String(30), nullable=False, default='Pending')
     _customer_id = db.Column(db.Integer, db.ForeignKey("customer.id"))
     
-    customer = db.relationship('Customer', backpopulates='orders')
+    customer = db.relationship('Customer', back_populates='orders')
     orderlines = db.relationship('OrderLine', back_populates='order')
     payment = db.relationship('Payment', back_populates='order')
 
@@ -51,7 +52,7 @@ class Order(db.Model):
 
         @return A boolean value indicating whether the order has been checked out.
         """
-        return self._submitted
+        return self._is_submitted
 
     @property
     def status(self) -> str:
@@ -63,18 +64,19 @@ class Order(db.Model):
 
     @property
     def customer_id(self) -> Customer:
-        """! Method to get the customer object who made the payment.
+        """! Method to get the customer id of customer who place the order.
 
-        @return The Customer object.
+        @return The customer id of customer who place the order.
         """
-        pass
+        return self._customer_id
+    
+    @property
+    def is_charge_to_account(self) -> bool:
+        """! Method to check whether the order is charged to account.
 
-    def calculate_total(self) -> Decimal:
-        """! Calculate to total cost of the order.
-
-        @return The total cost of the order.
+        @return A boolean value indicating whether the order is charged to account.
         """
-        return sum(item.calculate_subtotal() for item in self.orderlines)
+        return self._is_charge_to_account
     
     def require_delivery(self) -> bool:
         """! To check the distance is within the maximum delivery distance.
@@ -84,14 +86,38 @@ class Order(db.Model):
         #TODO check if can be delivered
         self.is_delivery = True
 
-    def update_status(self, new_status) -> None:
-        """! Update the status of the order to confirmed."""
-        pass
+    def calculate_total(self) -> Decimal:
+        """! Calculate to total cost of the order.
+
+        @return The total cost of the order.
+        """
+        return sum(item.calculate_subtotal() for item in self.orderlines)
 
     def submit_order(self) -> None:
         """! Update the status of the order to submitted."""
-        #TODO check 
+        #TODO check if the customer can place order
         self.is_submitted = True
+
+    def charge_to_account(self) -> None:
+        """! Charge to customer's account and update balance."""
+        if not self.is_account_charge:
+            self.is_account_charge = True
+            self.customer.balance += self.calculate_total()
+            db.session.commit()
+
+    # def cancel_order(self) -> None:
+    #     """! Update the status of the order to cancelled."""
+    #     self.update_status('Cancelled')
+
+    def update_status(self, new_status) -> None:
+        """! Update the status of the order to confirmed."""
+            
+        if new_status in self.STATUS:
+            self._status = new_status
+        else:
+            raise ValueError("Invalid status")
+
+
 
     #TODO maybe charge to account doesn't needto be recorded but update customer balance
     # _charge_to_account: bool = db.Column(db.Boolean, nullable=False, default=False)

@@ -10,7 +10,7 @@ class WeightedVeggie(Vegetable):
 
     id = db.Column(db.Integer, db.ForeignKey('vegetable.id'), primary_key=True, autoincrement=True)
     _price_per_kg = db.Column(db.Numeric(6, 2), nullable=False)
-    _weight = db.Column(db.Decimal(6, 2), nullable=False)
+    _weight = db.Column(db.Numeric(6, 2), nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'weighted_veggie',

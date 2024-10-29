@@ -9,7 +9,7 @@ class Item(db.Model):
     _orderline_id = db.Column(db.Integer, db.ForeignKey("orderline.id"))
 
     # Declare relationship
-    orderline = db.relationship('OrderLine', backpopulates='item')
+    orderline = db.relationship('OrderLine', back_populates='item')
 
     __mapper_args__ = {
         'polymorphic_identity': 'item',
@@ -24,6 +24,13 @@ class Item(db.Model):
         """
         return self._type
     
+    @property
+    def orderline_id(self) -> int:
+        """! Method to get the orderline id.
+
+        @return The orderline id as an integer.
+        """
+        return self._orderline_id
 
 
 # # Association table used to define many-to-many relationship

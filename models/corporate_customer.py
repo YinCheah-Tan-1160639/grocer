@@ -10,7 +10,7 @@ class CorporateCustomer(Customer):
     # Class attribute
     # discount_rate: Decimal = Decimal('0.1') # 10 percent --> was placed in order model in part 1
 
-    id: int = db.Column(db.Integer, db.ForeignKey('customer.id'), primary_key=True)
+    id: int = db.Column(db.Integer, db.ForeignKey('customer.id'), primary_key=True, autoincrement=True)
     _company_name: str = db.Column(db.String(100), nullable=False)
     _credit_limit: Decimal = db.Column(db.Numeric(10, 2), default=Decimal('1000.00'), nullable=False)
 

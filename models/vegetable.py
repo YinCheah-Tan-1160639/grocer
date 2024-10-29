@@ -1,16 +1,15 @@
-from . import db, Item, PremadeBox
-from decimal import Decimal
+from . import db, Item
 
 class Vegetable(Item):
     """! The class representing a Vegetable object."""
     __tablename__ = 'vegetable'
 
-    id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True, autoincrement=True)
     _name = db.Column(db.String(255), nullable=False)
-    premadebox_id = db.Column(db.Integer, db.ForeignKey('premadebox.id'), nullable=True)
+    _premadebox_id = db.Column(db.Integer, db.ForeignKey('premadebox.id'), nullable=True)
     # category = db.Column(db.String(50), nullable=False) # ie., "Leafy green", "root vegetables", "seasonal specials", "herbs and aromatics"
     # Relationship with premade boxes
-    premadebox: "PremadeBox" = db.relationship('PremadeBox', back_populates='vegetables')
+    premadebox = db.relationship('PremadeBox', back_populates='vegetables', foreign_keys=[_premadebox_id])
 
     __mapper_args__ = {
         'polymorphic_identity': 'vegetable',
@@ -31,6 +30,14 @@ class Vegetable(Item):
         @param new_name The new name to set.
         """
         self._name = new_name
+
+    @property
+    def premadebox_id(self) -> int:
+        """! Method to get the premadebox id.
+
+        @return The premadebox id as an integer.
+        """
+        return self._premadebox_id
 
 #     @property
 #     def category(self) -> str:

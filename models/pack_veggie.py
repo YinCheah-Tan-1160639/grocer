@@ -8,7 +8,7 @@ class PackVeggie(Vegetable):
     
     __tablename__ = 'pack_veggie'
 
-    id = db.Column(db.Integer, db.ForeignKey('vegetable.id'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('vegetable.id'), primary_key=True, autoincrement=True)
     # packet_size: str = db.Column(db.String(50), nullable=False)
     _price_per_pack = db.Column(db.Numeric(6, 2), nullable=False)
     _no_of_pack = db.Column(db.Integer, nullable=False)

@@ -1,4 +1,4 @@
-from . import db, Person, Order, Payment
+from . import db, Person
 from decimal import Decimal
 
 
