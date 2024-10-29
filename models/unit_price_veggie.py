@@ -8,10 +8,10 @@ class UnitPriceVeggie(Vegetable):
     
     __tablename__ = 'unit_price_veggie'
 
-    id: int = db.Column(db.Integer, db.ForeignKey('vegetable.id'), primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, db.ForeignKey('vegetable.id'), primary_key=True, autoincrement=True)
     # _measurement_unit: str = db.Column(db.String(100), default='each', nullable=False)
-    _price_per_unit: Decimal = db.Column(db.Numeric(6, 2), nullable=False)
-    _quantity: int = db.Column(db.Integer, nullable=False)
+    _price_per_unit = db.Column(db.Numeric(6, 2), nullable=False)
+    _quantity = db.Column(db.Integer, nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'unit_price_veggie',

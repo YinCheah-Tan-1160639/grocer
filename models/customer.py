@@ -1,4 +1,4 @@
-from . import db, Person
+from . import db, Person, Order, Payment
 from decimal import Decimal
 
 
@@ -11,25 +11,16 @@ class Customer(Person):
     # Class attribute
     _max_owing_limit: Decimal = Decimal('100.00')
 
-    id: int = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True, autoincrement=True)
-    _address: str = db.Column(db.String(255), nullable=False)
-    _balance: Decimal = db.Column(db.Numeric(10, 2), default=Decimal('0.00'))
+    id = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True, autoincrement=True)
+    _address = db.Column(db.String(255), nullable=False)
+    _balance = db.Column(db.Numeric(10, 2), default=Decimal('0.00'))
+    # Add relationship to orders and payments associated with the customer
+    orders = db.relationship('Order', back_populates='customer')
+    payments = db.relationship('Payment', back_populates='customer')
     
     __mapper_args__ = {
         'polymorphic_identity': 'customer'
     }
-
-    # Add relationship to orders and payments associated with the person
-    # orders: Order = db.relationship('Order', back_populates='customer')
-    # payments: Payment = db.relationship('Payment', back_populates='customer')
-
-    # @property
-    # def id(self) -> int:
-    #     """! Method to get the customer's id.
-
-    #     @return The id as an integer.
-    #     """
-    #     return self._id
 
     @property
     def address(self) -> str:

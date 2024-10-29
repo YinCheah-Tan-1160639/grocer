@@ -18,10 +18,6 @@ class CorporateCustomer(Customer):
         'polymorphic_identity': 'corporate_customer',
     }
 
-    # @property
-    # def id(self) -> int:
-    #     pass
-
     @property
     def company_name(self) -> str:
         """! Method to get the corporate customer's company name.

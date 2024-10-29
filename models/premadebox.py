@@ -3,22 +3,18 @@ from decimal import Decimal
 
 class PremadeBox(Item):
     """! The class representing a PremadeBox object."""
-    __tablename__ = 'premade_box'
+    __tablename__ = 'premadebox'
 
-    id: int = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True, autoincrement=True)
-    _size: str = db.Column(db.String(50), nullable=False)
-    _price_per_box: Decimal = db.Column(db.Numeric(10, 2), nullable=False)
-    _no_of_boxes: int = db.Column(db.Integer, nullable=False)
+    id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True, autoincrement=True)
+    _size = db.Column(db.String(50), nullable=False)
+    _price_per_box = db.Column(db.Numeric(10, 2), nullable=False)
+    _no_of_boxes = db.Column(db.Integer, nullable=False)
+    # Add relationship to vegetables associated with the premadebox
+    vegetables = db.relationship('Vegetable', back_populates='premadebox')
 
     __mapper_args__ = {
         'polymorphic_identity': 'premadebox'
     }
-
-    # Add relationship to vegetables associated with the premade_box
-    vegetables: "Vegetable" = db.relationship(
-        'Vegetable', 
-        back_populates='premadebox'
-    )
 
     @property
     def size(self) -> str:

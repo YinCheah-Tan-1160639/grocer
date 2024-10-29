@@ -8,9 +8,9 @@ class Staff(Person):
 
     __tablename__ = 'staff'
 
-    id: int = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True, autoincrement=True)
-    _position: str = db.Column(db.String(255), nullable=False)
-    _department: str = db.Column(db.String(255), nullable=False)
+    id = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True, autoincrement=True)
+    _position = db.Column(db.String(255), nullable=False)
+    _department = db.Column(db.String(255), nullable=False)
     _date_joined = db.Column(db.Date, nullable=False)
     
     __mapper_args__ = {

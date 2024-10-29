@@ -1,9 +1,3 @@
-
-# from .order import Order
-# from .payment import Payment
-
-
-# __all__ = ['Order', 'Payment', 'Item']
 # Import db from app.py
 from app import db 
  
@@ -14,6 +8,9 @@ from .customer import Customer
 from .corporate_customer import CorporateCustomer
 from .item import Item
 from .vegetable import Vegetable
+from .premadebox import PremadeBox
+from .order import Order
+from .payment import Payment
 
 __all__ = [
     'db', 
@@ -22,5 +19,8 @@ __all__ = [
     'Customer', 
     'CorporateCustomer', 
     'Item', 
-    'Vegetable'
+    'Vegetable',
+    'PremadeBox',
+    'Order',
+    'Payment'
 ]

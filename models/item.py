@@ -1,18 +1,15 @@
 from . import db
 
-# # Association table used to define many-to-many relationship
-# box_content = db.Table("box_content", 
-#     db.Column("vegetable_id", db.Integer, db.ForeignKey('vegetable.id'), primary_key=True), 
-#     db.Column("premade_box_id",db.Integer, db.ForeignKey('premade_box.id'), primary_key=True)
-# )
-
 class Item(db.Model):
     """! The class representing an item."""
     __tablename__ = 'item'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)    
     _type = db.Column(db.String(50))  # 'vegetable', 'premade_box'
+    _orderline_id = db.Column(db.Integer, db.ForeignKey("orderline.id"))
+
+    # Declare relationship
+    orderline = db.relationship('OrderLine', backpopulates='item')
 
     __mapper_args__ = {
         'polymorphic_identity': 'item',
@@ -26,3 +23,11 @@ class Item(db.Model):
         @return The type as a string.
         """
         return self._type
+    
+
+
+# # Association table used to define many-to-many relationship
+# box_content = db.Table("box_content", 
+#     db.Column("vegetable_id", db.Integer, db.ForeignKey('vegetable.id'), primary_key=True), 
+#     db.Column("premade_box_id",db.Integer, db.ForeignKey('premade_box.id'), primary_key=True)
+# )

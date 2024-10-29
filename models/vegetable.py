@@ -1,25 +1,20 @@
-import re
-from . import db, Item
+from . import db, Item, PremadeBox
 from decimal import Decimal
 
 class Vegetable(Item):
     """! The class representing a Vegetable object."""
     __tablename__ = 'vegetable'
 
-    id: int = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
-    _name: str = db.Column(db.String(255), nullable=False)
-    # category: str = db.Column(db.String(50), nullable=False) # ie., "Leafy green", "root vegetables", "seasonal specials", "herbs and aromatics"
+    id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
+    _name = db.Column(db.String(255), nullable=False)
+    premadebox_id = db.Column(db.Integer, db.ForeignKey('premadebox.id'), nullable=True)
+    # category = db.Column(db.String(50), nullable=False) # ie., "Leafy green", "root vegetables", "seasonal specials", "herbs and aromatics"
+    # Relationship with premade boxes
+    premadebox: "PremadeBox" = db.relationship('PremadeBox', back_populates='vegetables')
 
     __mapper_args__ = {
         'polymorphic_identity': 'vegetable',
     }
-
-#     # Relationship with premade boxes through the association table
-#     premade_boxes: "PremadeBox" = db.relationship(
-#         'PremadeBox', 
-#         secondary=box_content,
-#         back_populates='vegetable'
-#     )
 
     @property
     def name(self) -> str:

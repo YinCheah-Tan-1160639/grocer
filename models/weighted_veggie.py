@@ -8,8 +8,8 @@ class WeightedVeggie(Vegetable):
     
     __tablename__ = 'weighted_veggie'
 
-    id: int = db.Column(db.Integer, db.ForeignKey('vegetable.id'), primary_key=True, autoincrement=True)
-    _price_per_kg: Decimal = db.Column(db.Numeric(6, 2), nullable=False)
+    id = db.Column(db.Integer, db.ForeignKey('vegetable.id'), primary_key=True, autoincrement=True)
+    _price_per_kg = db.Column(db.Numeric(6, 2), nullable=False)
     _weight = db.Column(db.Decimal(6, 2), nullable=False)
 
     __mapper_args__ = {

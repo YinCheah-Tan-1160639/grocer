@@ -22,14 +22,6 @@ class Person(db.Model):
         'polymorphic_identity': 'person',
         'polymorphic_on': _type
     }
-
-    # @property
-    # def id(self) -> int:
-    #     """! Method to get the person's ID.
-        
-    #     @return The ID as an int.
-    #     """
-    #     return self.id
     
     @property
     def first_name(self) -> str:
