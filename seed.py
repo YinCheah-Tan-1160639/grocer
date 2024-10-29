@@ -10,124 +10,124 @@ def insert_test_data():
     # Create sample data
     # Staff
     Staff1 = Staff(
-        _first_name='John', 
-        _family_name='Doe', 
-        _phone='0123456789', 
-        _email="john.doe@example.com", 
-        _username='john_doe', 
-        _password='1234', 
-        _position='Manager', 
-        _department='Sales', 
-        _date_joined='2021-01-01'
+        first_name='John', 
+        family_name='Doe', 
+        phone='0123456789', 
+        email="john.doe@example.com", 
+        username='john_doe', 
+        password='1234', 
+        position='Manager', 
+        department='Sales', 
+        date_joined='2021-01-01'
     )
 
     Staff2 = Staff(
-        _first_name='Staff', 
-        _family_name='Two', 
-        _phone='0123456789', 
-        _email="staff.two@example.com",
-        _username='staff_2', 
-        _password='1234', 
-        _position='Sales Associate', 
-        _department='Sales', 
-        _date_joined='2021-01-01'
+        first_name='Staff', 
+        family_name='Two', 
+        phone='0123456789', 
+        email="staff.two@example.com",
+        username='staff_2', 
+        password='1234', 
+        position='Sales Associate', 
+        department='Sales', 
+        date_joined='2021-01-01'
     )
 
     Staff3 = Staff(
-        _first_name='Staff', 
-        _family_name='Three', 
-        _phone='0123456789', 
-        _email="staff.three@example.com",
-        _username='staff_3', 
-        _password='1234', 
-        _position='Sales Associate', 
-        _department='Sales', 
-        _date_joined='2021-01-01'
+        first_name='Staff', 
+        family_name='Three', 
+        phone='0123456789', 
+        email="staff.three@example.com",
+        username='staff_3', 
+        password='1234', 
+        position='Sales Associate', 
+        department='Sales', 
+        date_joined='2021-01-01'
     )
     
     # Customers
     customer1 = Customer(
-        _first_name='Customer', 
-        _family_name='One', 
-        _phone='0123456789', 
-        _email="cust.one@example.com",
-        _username='cust_1', 
-        _password='1234', 
-        _address='1234 Main St'
+        first_name='Customer', 
+        family_name='One', 
+        phone='0123456789', 
+        email="cust.one@example.com",
+        username='cust_1', 
+        password='1234', 
+        address='1234 Main St'
     )
     
     customer2 = Customer(
-        _first_name='Customer', 
-        _family_name='Two', 
-        _phone='0123456789', 
-        _email="cust.two@example.com",
-        _username='cust_2', 
-        _password='1234', 
-        _address='1234 Main St'
+        first_name='Customer', 
+        family_name='Two', 
+        phone='0123456789', 
+        email="cust.two@example.com",
+        username='cust_2', 
+        password='1234', 
+        address='1234 Main St'
     )
 
     customer3 = Customer(
-        _first_name='Customer', 
-        _family_name='Three', 
-        _phone='0123456789', 
-        _email="cust.three@example.com",
-        _username='cust_3', 
-        _password='1234', 
-        _address='1234 Main St'
+        first_name='Customer', 
+        family_name='Three', 
+        phone='0123456789', 
+        email="cust.three@example.com",
+        username='cust_3', 
+        password='1234', 
+        address='1234 Main St'
     )
 
     customer4 = Customer(
-        _first_name='Customer', 
-        _family_name='Four', 
-        _phone='0123456789', 
-        _email="cust.four@example.com",
-        _username='cust_4', 
-        _password='1234', 
-        _address='1234 Main St'
+        first_name='Customer', 
+        family_name='Four', 
+        phone='0123456789', 
+        email="cust.four@example.com",
+        username='cust_4', 
+        password='1234', 
+        address='1234 Main St'
     )
 
     customer5 = Customer(
-        _first_name='Customer', 
-        _family_name='Five', 
-        _phone='0123456789', 
-        _email="cust.five@example.com",
-        _username='cust_5', 
-        _password='1234', 
-        _address='1234 Main St'
+        first_name='Customer', 
+        family_name='Five', 
+        phone='0123456789', 
+        email="cust.five@example.com",
+        username='cust_5', 
+        password='1234', 
+        address='1234 Main St'
     )
 
     # Corporate Customers
     corporate_customer1 = CorporateCustomer(
-        _first_name='Corporate', 
-        _family_name='One', 
-        _phone='0123456789', 
-        _email="company.one@example.com",
-        _username='company1', 
-        _password='1234', 
-        _address='1234 Main St',
-        _company_name='Company One'
+        first_name='Corporate', 
+        family_name='One', 
+        phone='0123456789', 
+        email="company.one@example.com",
+        username='company1', 
+        password='1234', 
+        address='1234 Main St',
+        company_name='Company One'
     )
 
     corporate_customer2 = CorporateCustomer(
-        _first_name='Corporate', 
-        _family_name='Two', 
-        _phone='0123456789', 
-        _email="company.two@example.com",
-        _username='company2', 
-        _password='1234', 
-        _address='1234 Main St',
-        _company_name='Company Two'
+        first_name='Corporate', 
+        family_name='Two', 
+        phone='0123456789', 
+        email="company.two@example.com",
+        username='company2', 
+        password='1234', 
+        address='1234 Main St',
+        company_name='Company Two'
     )
 
     corporate_customer3 = CorporateCustomer(
-        _first_name='Corporate', 
-        _family_name='Three', 
-        _phone='0123456789', 
-        _email="company.three@example.com",
-        _username='company3', 
-        _password='1234', 
-        _address='1234 Main St',
-        _company_name='Company Three'
+        first_name='Corporate', 
+        family_name='Three', 
+        phone='0123456789', 
+        email="company.three@example.com",
+        username='company3', 
+        password='1234', 
+        address='1234 Main St',
+        company_name='Company Three'
     )
 
     
