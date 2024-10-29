@@ -1,6 +1,7 @@
 from . import db
 from sqlalchemy.sql import func
 from datetime import datetime
+from . import hashing
 
 class Person(db.Model):
     """! The class representing a person."""
@@ -22,6 +23,15 @@ class Person(db.Model):
         'polymorphic_identity': 'person',
         'polymorphic_on': _type
     }
+
+    # def __init__(self, first_name, family_name, phone, email, username, password, user_type):
+    #     self._first_name = first_name
+    #     self._family_name = family_name
+    #     self._phone = phone
+    #     self._email = email
+    #     self._username = username
+    #     self._password = hashing.hash_value(password)  # Hash the password
+    #     self._type = user_type
     
     @property
     def first_name(self) -> str:
@@ -95,13 +105,13 @@ class Person(db.Model):
         """
         return self._username
     
-    # @username.setter
-    # def username(self, new_username: str) -> None:
-    #     """Method to set new username for the person.
+    @username.setter
+    def username(self, new_username: str) -> None:
+        """Method to set new username for the person.
 
-    #     @param new_username The new username to set.
-    #     """
-    #     self._username = new_username
+        @param new_username The new username to set.
+        """
+        self._username = new_username
     
     @property
     def password(self) -> str:
@@ -114,27 +124,41 @@ class Person(db.Model):
 
         @param new_password The new password to set.
         """
-        self._password = new_password
+        self._password = hashing.hash_value(new_password, salt='abcd')
 
     @property
     def created_at(self) -> datetime:
-        """Method to get the time when the person is created."""
+        """Method to get the time when the person is created.
+
+        @return The time when the person is created.
+        """
         return self._created_at
     
     @property
     def type(self) -> str:
-        """Method to get the type of the person."""
+        """Method to get the type of the person.
+        
+        @return The type of the person as a string.
+        """
         return self._type
     
     def __str__(self) -> str:
         return f"<Name: {self.fullname()}, Role: {self.type}>"
     
     def fullname(self) -> str:
+        """! Method to get the full name of the person.
+
+        @return The full name as a string.
+        """
         return f"{self.first_name} {self.family_name}"
     
     def check_password(self, password) -> bool:
-        """Checks the hashed password against a provided password."""
-        pass
+        """Checks the hashed password against a provided password.
+        
+        @param password The password to check.
+        @return True if the password matches, False otherwise.
+        """
+        return hashing.check_value(self._password, password, salt='abcd')
     
 
     
