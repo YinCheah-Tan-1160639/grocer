@@ -1,5 +1,6 @@
-# Import db from app.py
-from app import db 
+# Import db, hashing from app.py
+from app import db
+from app import hashing
  
 # Import individual models
 from .person import Person
@@ -20,6 +21,7 @@ from .premadebox import PremadeBox
 
 __all__ = [
     'db', 
+    'hashing',
     'Person', 
     'Staff', 
     'Customer', 
