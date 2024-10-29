@@ -8,6 +8,7 @@ def insert_test_data():
     # db.drop_all()  # Warning: This deletes all data!
 
     # Create sample data
+    # Staff
     Staff1 = Staff(
         _first_name='John', 
         _family_name='Doe', 
@@ -44,6 +45,7 @@ def insert_test_data():
         _date_joined='2021-01-01'
     )
     
+    # Customers
     customer1 = Customer(
         _first_name='Customer', 
         _family_name='One', 
@@ -94,6 +96,7 @@ def insert_test_data():
         _address='1234 Main St'
     )
 
+    # Corporate Customers
     corporate_customer1 = CorporateCustomer(
         _first_name='Corporate', 
         _family_name='One', 
@@ -126,6 +129,8 @@ def insert_test_data():
         _address='1234 Main St',
         _company_name='Company Three'
     )
+
+    
 
     # Add to session
     db.session.add(Staff1)
