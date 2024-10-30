@@ -1,41 +1,49 @@
 from flask import Blueprint, render_template, abort, request, redirect, url_for, session, flash
+from decorators import role_required
 from models import Person
 
-store_bp = Blueprint('store', __name__)
+from app import db
+from models.vegetable import Vegetable
+
+store_bp = Blueprint("store", __name__)
 
 @store_bp.route("/")
 def index():    
-    # check if has session
-    # if 'username' not in session or 'role' not in session:
-    #     return render_template('index.html', events=events, latest_news=latest_news_data)
-
-    # role = session['role']
-    # username = session['username']
-    # return render_template('index.html', role=role, username=username)
-    return render_template("index.html")
+    # Check if has session
+    if "username" not in session or "role" not in session:
+        return render_template('index.html')
+    return render_template("index.html",
+                           role=session['role'],
+                           username=session['username'])
 
 @store_bp.route("/login", methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return render_template("auth.html")
+    else:
         # get user input
         username = request.form.get('username')
         password = request.form.get('password')
-        # check if user is in db
-        user = Person.query.filter_by(username=username).first()
+        user = Person.find_by_username(username)
         if user and user.check_password(password):
             session['user_id'] = user.id  # Store user ID in session
-            session['user_role'] = user.type  # Store user role in session
-            flash('You were successfully logged in!')
+            session['role'] = user.type  # Store user role in session
+            session['username'] = user.username # Store username in session
+            flash('You were successfully logged in!', 'success')
             return redirect(url_for('store.dashboard'))
         else:
-            flash('Invalid username or password!')
+            flash('Invalid username or password!', 'error')
             return redirect(url_for('store.login'))
-    return render_template("auth.html")
+
 
 @store_bp.route("/dashboard")
+@role_required('staff', 'customer', 'corporate_customer')
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("dashboard.html", 
+                           role=session['role'],
+                           username=session['username'])
 
-# @store_bp.route("/logout")
-# def logout():
-#     return redirect(url_for('store.index'))
+@store_bp.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for('store.login'))
