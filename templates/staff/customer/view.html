@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Customer Details
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-2">
+    <!-- back to customer list -->
+    <div class="d-flex mb-4 justify-content-start ms-6">
+        <a href="{{ url_for('staff.list_customers')}}" class="link-back">
+            <i class="bi bi-arrow-left"></i> Back to Customer List 
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- Customer Details Card -->
+            <div class="card border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Customer Details</h4>
+                </div>
+                <div class="card-body">
+                    <!-- User Details List Group -->
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">First Name: {{ customer.first_name }}</li>
+                        <li class="list-group-item">Family Name: {{ customer.family_name }}</li>
+                        <li class="list-group-item">Phone: {{ customer.phone }}</li>
+                        <li class="list-group-item">Email: {{ customer.email }}</li>
+                        <li class="list-group-item">Address: {{ customer.address }}</li>
+                        <li class="list-group-item">Outstanding Balance: {{ customer.balance }}</li>
+                        <li class="list-group-item">Type: {{ "Corporate" if customer.type == 'corporate_customer' else "Private" }}</li>
+                        {% if customer.type == 'corporate_customer' %}
+                        <li class="list-group-item">Company: {{ customer.company_name }}</li>
+                        <li class="list-group-item">Credit Limit: {{ customer.credit_limit }}</li>
+                        {% endif %}
+                        <li class="list-group-item">Created At: {{ customer.created_at }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

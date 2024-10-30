@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+<div>
+    <!-- Display if user is logged in -->
+    {% if username %}   
+    <div class="card border-0">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">My Details</h4>
+        </div>
+        <div class="card-body">
+            <!-- User Details List Group -->
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">First Name: {{ user.first_name }}</li>
+                <li class="list-group-item">Family Name: {{ user.family_name }}</li>
+                <li class="list-group-item">Phone: {{ user.phone }}</li>
+                <li class="list-group-item">Email: {{ user.email }}</li>
+                <li class="list-group-item">Address: {{ user.address }}</li>
+                <li class="list-group-item">Outstanding Balance: {{ user.balance }}</li>
+                {% if role == 'corporate_customer' %}
+                <li class="list-group-item">Company Name: {{ user.company_name }}</li>
+                <li class="list-group-item">Address: {{ user.address }}</li>
+                <li class="list-group-item">Outstanding Balance: {{ user.balance }}</li>
+                <li class="list-group-item">Credit Limit: {{ user.credit_limit }}</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

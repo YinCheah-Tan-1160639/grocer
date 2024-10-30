@@ -16,48 +16,7 @@
 </head>
 <body class="bg-light">
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('store.index') }}">Fresh Harvest Grocer</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">                    
-                    <!-- add if username -->
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">Customers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">Payments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">Report</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">
-                            <i class="bi bi-box-arrow-right me-2"></i>Logout
-                        </a>
-                    </li>
-                    <!-- else -->
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ url_for('store.login') }}">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Login
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {% include 'navbar.html' %}
     <!-- Error message display -->
     <div class="text-center">
         {% with messages = get_flashed_messages(with_categories=True) %}

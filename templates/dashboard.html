@@ -5,5 +5,14 @@
 {% endblock %}
 
 {% block content %}
-<p>dashh</p>
+<div>
+    <!-- Display if user is logged in -->
+    {% if username %}
+    <div>
+        <h2 class="mt-4 mb-5">
+            Welcome back {{ username }}
+        </h2>
+    </div>    
+    {% endif %}
+</div>
 {% endblock %}

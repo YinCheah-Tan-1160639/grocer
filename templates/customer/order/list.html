@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Orders
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-2">
+    <div class="d-flex justify-content-between mt-2 mb-3 me-4">
+        <h3>My Orders</h3>
+        <div class="d-flex">
+            <div class="me-2">
+                <!-- Search Form -->
+                <!-- <form action=""method="get">
+                    <div class="input-group mb-3">
+                        <input class="form-control" name="search_query" placeholder="Email" type="text"
+                               value="">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-warning" type="submit">
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form> -->
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive me-4">
+        <table class="table table-hover">
+            <thead class="table-primary">
+                <tr class="text-center">
+                    <th scope="col">Date</th>
+                    <th scope="col">Order No.</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr class="text-center">
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.is_delivery }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        {# 
+                        <a class="btn btn-primary btn-sm me-2"
+                        href="{{ url_for('customer.view_order', order_id=order.id) }}">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
+                        {% if order.status == 'Pending' %}
+                        <a class="btn btn-primary btn-sm me-2"
+                        href="{{ url_for('customer.cancel_order', order_id=order.id) }}">
+                            <i class="bi bi-eye"></i> Cancel
+                        </a>
+                        <form action="{{ url_for('customer.cancel_order', order_id=order.id) }}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm" 
+                            onclick="return confirm('Are you sure you want to cancel order?');">
+                                <i class="bi bi-trash"></i> Cancel
+                            </button>
+                        </form>
+                        {% endif %}
+                        <a class="btn btn-primary btn-sm me-2"
+                        href="{{ url_for('customer.update_order', order_id=order.id) }}">
+                            <i class="bi bi-eye"></i> Pay Now
+                        </a>
+                        #}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

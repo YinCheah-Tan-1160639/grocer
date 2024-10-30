@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Premade Boxes
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Title -->
+    <div class="d-flex justify-content-between">
+        <h2 class="mb-4 ms-2">
+            Premade Boxes
+        </h2>
+    </div>
+    
+    <!-- Display all Premade Boxes-->
+    {% for box in boxes %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <h5 class="card-header">{{ box.size | title }} Box - {{ "$%.2f" | format(box.price) }}</h5>
+            <div class="card-body">
+                <ol class="list-group list-group-numbered">
+                    {% for item in box.contents %}
+                        <li class="list-group-item">{{ item.product.name }} - {{ item.quantity }} {{ item.product.unit }}</li>
+                    {% endfor %}
+                </ol>
+                <p>
+                    {{ box.content }}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">        
+        <a class="navbar-brand" href="{{ url_for('store.index') }}">
+            <strong>
+                Fresh Harvest Grocer
+            </strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">                    
+                {% if role %}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('store.dashboard') }}">
+                        Dashboard
+                    </a>
+                </li>                
+                {% if role in ('customer', 'corporate_customer') %}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('customer.profile') }}">
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('customer.list_veggies') }}">
+                        Vegetables
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('customer.list_premade_boxes') }}">
+                        Premade Boxes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">
+                        My Orders
+                    </a>
+                </li>
+                {% endif %}
+                {% if role == 'staff' %}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('staff.profile') }}">
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">
+                        Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('staff.list_veggies') }}">
+                        Vegetables
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('staff.list_premade_boxes') }}">
+                        Premade Boxes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('staff.list_customers') }}">
+                        Customers
+                    </a>
+                </li>                
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">
+                        Report
+                    </a>
+                </li>
+                {% endif %}                                
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('store.logout') }}">
+                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('store.login') }}">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
