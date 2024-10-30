@@ -1,4 +1,5 @@
 from . import db, Payment
+# from .payment import Payment
 from datetime import datetime
 
 class CreditCard(Payment):
@@ -11,9 +12,9 @@ class CreditCard(Payment):
     VALID_CARD_TYPES = ['Visa', 'MasterCard']
 
     id = db.Column(db.Integer, db.ForeignKey('payment.id'), primary_key=True, autoincrement=True)
-    _card_type = db.Column(db.String(50), nullable=False)
+    card_type = db.Column(db.String(50), nullable=False)
     _card_number = db.Column(db.String(4), nullable=False) # Only store the last 4 digits?
-    _card_expiry = db.Column(db.String(5), nullable=False) # Store as MM/YY
+    card_expiry = db.Column(db.String(5), nullable=False) # Store as MM/YY
     #TODO find out easy way to store expiry or maybe don't store them?
 
     __mapper_args__ = {
@@ -21,12 +22,8 @@ class CreditCard(Payment):
     }
 
     @property
-    def card_type(self) -> str: #TODO maybe have a list of card type to choose from? a global variable?
-        return self._card_type
-    
-    @property
     def card_number(self) -> str: # only show the last 4 numbers: XXXX-XXXX-XXXX-1234
-        return f"XXXX-XXXX-XXXX-{self.__card_number[-4:]}"
+        return f"XXXX-XXXX-XXXX-{self._card_number[-4:]}"
 
     def is_valid_card(self, card_number: str) -> bool:
         """! To validate the credit card number.
@@ -46,3 +43,9 @@ class CreditCard(Payment):
         expiry_month, expiry_year = map(int, self._card_expiry.split('/'))
         expiry_date = datetime(year=2000 + expiry_year, month=expiry_month, day=1)  # Use 1st of the month for comparison
         return expiry_date > datetime.now()  # Check if the expiry date is in the future
+    
+    
+    # @property
+    # def card_type(self) -> str: #TODO maybe have a list of card type to choose from? a global variable?
+    #     return self._card_type
+    

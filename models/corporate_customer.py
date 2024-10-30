@@ -1,4 +1,5 @@
 from . import db, Customer
+# from .customer import Customer
 from decimal import Decimal
 
 class CorporateCustomer(Customer):
@@ -7,32 +8,13 @@ class CorporateCustomer(Customer):
 
     __tablename__ = 'corporate_customer'
 
-    # Class attribute
-    # discount_rate: Decimal = Decimal('0.1') # 10 percent --> was placed in order model in part 1
-
-    id: int = db.Column(db.Integer, db.ForeignKey('customer.id'), primary_key=True, autoincrement=True)
-    _company_name: str = db.Column(db.String(100), nullable=False)
-    _credit_limit: Decimal = db.Column(db.Numeric(10, 2), default=Decimal('1000.00'), nullable=False)
+    id = db.Column(db.Integer, db.ForeignKey('customer.id'), primary_key=True, autoincrement=True)
+    company_name = db.Column(db.String(100), nullable=False)
+    _credit_limit = db.Column(db.Numeric(10, 2), default=Decimal('1000.00'), nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'corporate_customer',
     }
-
-    @property
-    def company_name(self) -> str:
-        """! Method to get the corporate customer's company name.
-
-        @return The company name as a string.
-        """
-        return self._company_name
-    
-    @company_name.setter
-    def company_name(self, new_name: str) -> None:
-        """! Method to set new company name for the corporate customer.
-
-        @param new_name The new company name to set.
-        """
-        self._company_name = new_name
 
     @property
     def credit_limit(self) -> Decimal:
@@ -86,3 +68,25 @@ class CorporateCustomer(Customer):
         @return The Customer object as a string.
         """
         return f"<Name: {self.fullname()}, Role: Corporate Customer>"
+
+
+
+    # Class attribute
+    # discount_rate: Decimal = Decimal('0.1') # 10 percent --> was placed in order model in part 1
+
+    
+    # @property
+    # def company_name(self) -> str:
+    #     """! Method to get the corporate customer's company name.
+
+    #     @return The company name as a string.
+    #     """
+    #     return self._company_name
+    
+    # @company_name.setter
+    # def company_name(self, new_name: str) -> None:
+    #     """! Method to set new company name for the corporate customer.
+
+    #     @param new_name The new company name to set.
+    #     """
+    #     self._company_name = new_name

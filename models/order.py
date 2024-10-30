@@ -1,7 +1,8 @@
 from datetime import datetime
 from decimal import Decimal
 from sqlalchemy.sql import func
-from . import db, Customer
+from . import db
+# from .customer import Customer
 
 
 class Order(db.Model):
@@ -9,7 +10,7 @@ class Order(db.Model):
     
     __tablename__ = 'order'
     
-    STATUS = ['Pending', 'Cancelled', 'Processed', 'Ready', 'Delivered', 'Completed']
+    STATUS = ['Pending', 'Cancelled', 'Ready for Pickup', 'Shipped', 'Completed']
 
     # Class attributes
     # The discount for corporate customer for every order.
@@ -18,65 +19,16 @@ class Order(db.Model):
     _max_delivery_distance = 20 # kilometres
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    _date = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    _is_delivery = db.Column(db.Boolean, nullable=False, default=False)
-    _is_submitted = db.Column(db.Boolean, nullable=False, default=False) # checked out
-    _is_charge_to_account = db.Column(db.Boolean, nullable=False, default=False)
-    _status = db.Column(db.String(30), nullable=False, default='Pending')
-    _customer_id = db.Column(db.Integer, db.ForeignKey("customer.id"))
+    date = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    is_delivery = db.Column(db.Boolean, nullable=False, default=False)
+    is_submitted = db.Column(db.Boolean, nullable=False, default=False) # checked out
+    is_charge_to_account = db.Column(db.Boolean, nullable=False, default=False)
+    status = db.Column(db.String(30), nullable=False, default='Pending')
+    customer_id = db.Column(db.Integer, db.ForeignKey("customer.id"))
     
     customer = db.relationship('Customer', back_populates='orders')
     orderlines = db.relationship('OrderLine', back_populates='order')
     payment = db.relationship('Payment', back_populates='order')
-
-    @property
-    def date(self) -> datetime:
-        """! Method to get the order date.
-
-        @return The date object of the order.
-        """
-        return self._date
-    
-    @property
-    def is_delivery(self) -> bool:
-        """! Method to get the delivery requirement of the order.
-
-        @return A boolean value indicating whether the order is a delivery order.
-        """
-        #TODO add check here to make sure it is lass than 20km
-        return self._is_delivery
-
-    @property
-    def is_submitted(self) -> bool:
-        """! Method to check whether the order has been checked out.
-
-        @return A boolean value indicating whether the order has been checked out.
-        """
-        return self._is_submitted
-
-    @property
-    def status(self) -> str:
-        """! Method to get the status of the order.
-
-        @return A string value indicating status of the order.
-        """
-        return self._status
-
-    @property
-    def customer_id(self) -> Customer:
-        """! Method to get the customer id of customer who place the order.
-
-        @return The customer id of customer who place the order.
-        """
-        return self._customer_id
-    
-    @property
-    def is_charge_to_account(self) -> bool:
-        """! Method to check whether the order is charged to account.
-
-        @return A boolean value indicating whether the order is charged to account.
-        """
-        return self._is_charge_to_account
     
     def require_delivery(self) -> bool:
         """! To check the distance is within the maximum delivery distance.
@@ -105,9 +57,9 @@ class Order(db.Model):
             self.customer.balance += self.calculate_total()
             db.session.commit()
 
-    # def cancel_order(self) -> None:
-    #     """! Update the status of the order to cancelled."""
-    #     self.update_status('Cancelled')
+    def cancel_order(self) -> None:
+        """! Update the status of the order to cancelled."""
+        self.update_status('Cancelled')
 
     def update_status(self, new_status) -> None:
         """! Update the status of the order to confirmed."""
@@ -145,3 +97,53 @@ class Order(db.Model):
     #     @param The OrderLine object to be removed.
     #     """
     #     pass
+
+    
+    # @property
+    # def date(self) -> datetime:
+    #     """! Method to get the order date.
+
+    #     @return The date object of the order.
+    #     """
+    #     return self._date
+    
+    # @property
+    # def is_delivery(self) -> bool:
+    #     """! Method to get the delivery requirement of the order.
+
+    #     @return A boolean value indicating whether the order is a delivery order.
+    #     """
+    #     #TODO add check here to make sure it is lass than 20km
+    #     return self._is_delivery
+
+    # @property
+    # def is_submitted(self) -> bool:
+    #     """! Method to check whether the order has been checked out.
+
+    #     @return A boolean value indicating whether the order has been checked out.
+    #     """
+    #     return self._is_submitted
+
+    # @property
+    # def status(self) -> str:
+    #     """! Method to get the status of the order.
+
+    #     @return A string value indicating status of the order.
+    #     """
+    #     return self._status
+
+    # @property
+    # def customer_id(self) -> Customer:
+    #     """! Method to get the customer id of customer who place the order.
+
+    #     @return The customer id of customer who place the order.
+    #     """
+    #     return self._customer_id
+    
+    # @property
+    # def is_charge_to_account(self) -> bool:
+    #     """! Method to check whether the order is charged to account.
+
+    #     @return A boolean value indicating whether the order is charged to account.
+    #     """
+    #     return self._is_charge_to_account

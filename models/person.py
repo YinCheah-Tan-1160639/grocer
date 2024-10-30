@@ -1,6 +1,6 @@
 from . import db
 from sqlalchemy.sql import func
-from datetime import datetime
+# from datetime import datetime
 from . import hashing
 
 class Person(db.Model):
@@ -9,62 +9,20 @@ class Person(db.Model):
     __tablename__ = 'person'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    _first_name = db.Column(db.String(50), nullable=False)
-    _family_name = db.Column(db.String(50), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    family_name = db.Column(db.String(50), nullable=False)
     _phone = db.Column(db.String(11), nullable=False)
     _email = db.Column(db.String(80), unique=True, nullable=False)    
     _username = db.Column(db.String(30), unique=True, nullable=False)
     _password = db.Column(db.String(255), nullable=False)
-    _created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
-
-    _type = db.Column(db.String(50)) # Discriminator attribute: 'staff', 'customer'
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    type = db.Column(db.String(50)) # Discriminator attribute: 'staff', 'customer'
     
     __mapper_args__ = {
         'polymorphic_identity': 'person',
-        'polymorphic_on': _type
+        'polymorphic_on': type
     }
 
-    # def __init__(self, first_name, family_name, phone, email, username, password, user_type):
-    #     self._first_name = first_name
-    #     self._family_name = family_name
-    #     self._phone = phone
-    #     self._email = email
-    #     self._username = username
-    #     self._password = hashing.hash_value(password)  # Hash the password
-    #     self._type = user_type
-    
-    @property
-    def first_name(self) -> str:
-        """! Method to get the person's first name.
-        
-        @return The first name as a string.
-        """
-        return self._first_name
-    
-    @first_name.setter
-    def first_name(self, new_first_name: str) -> None:
-        """! Method to set new first name for the person.
-        
-        @param new_first_name The new first name to set.
-        """
-        self._first_name = new_first_name
-    
-    @property  
-    def family_name(self) -> str:
-        """! Method to get the person's family name.
-        
-        @return The family name as a string.
-        """
-        return self._family_name
-    
-    @family_name.setter
-    def family_name(self, new_family_name: str) -> None:
-        """! Method to set new family name for the person.
-        
-        @param new_family_name The new family name to set.
-        """
-        self._family_name = new_family_name
-    
     @property
     def phone(self) -> str:
         """! Method to get the person's phone number.
@@ -112,11 +70,21 @@ class Person(db.Model):
         @param new_username The new username to set.
         """
         self._username = new_username
+
+    @classmethod
+    def find_by_username(cls, username: str):
+        """! Method to find a person by username.
+
+        @param username The username to search for.
+        @return The person with the given username.
+        """
+        return cls.query.filter_by(_username=username).first()
     
     @property
     def password(self) -> str:
-        """Returns the hashed password. Direct access to the password is not allowed."""
-        raise AttributeError("Password is not accessible directly.")
+        # """Returns the hashed password. Direct access to the password is not allowed."""
+        # raise AttributeError("Password is not accessible directly.")
+        return self._password
     
     @password.setter
     def password(self, new_password: str) -> None:
@@ -125,22 +93,6 @@ class Person(db.Model):
         @param new_password The new password to set.
         """
         self._password = hashing.hash_value(new_password, salt='abcd')
-
-    @property
-    def created_at(self) -> datetime:
-        """Method to get the time when the person is created.
-
-        @return The time when the person is created.
-        """
-        return self._created_at
-    
-    @property
-    def type(self) -> str:
-        """Method to get the type of the person.
-        
-        @return The type of the person as a string.
-        """
-        return self._type
     
     def __str__(self) -> str:
         return f"<Name: {self.fullname()}, Role: {self.type}>"
@@ -161,5 +113,70 @@ class Person(db.Model):
         return hashing.check_value(self._password, password, salt='abcd')
     
 
-    
 
+    # def __init__(self, first_name, family_name, phone, email, username, password, user_type):
+    #     self._first_name = first_name
+    #     self._family_name = family_name
+    #     self._phone = phone
+    #     self._email = email
+    #     self._username = username
+    #     self._password = hashing.hash_value(password)  # Hash the password
+    #     self._type = user_type
+    
+    # @property
+    # def first_name(self) -> str:
+    #     """! Method to get the person's first name.
+        
+    #     @return The first name as a string.
+    #     """
+    #     return self._first_name
+    
+    # @first_name.setter
+    # def first_name(self, new_first_name: str) -> None:
+    #     """! Method to set new first name for the person.
+        
+    #     @param new_first_name The new first name to set.
+    #     """
+    #     self._first_name = new_first_name
+    
+    # @property  
+    # def family_name(self) -> str:
+    #     """! Method to get the person's family name.
+        
+    #     @return The family name as a string.
+    #     """
+    #     return self._family_name
+    
+    # @family_name.setter
+    # def family_name(self, new_family_name: str) -> None:
+    #     """! Method to set new family name for the person.
+        
+    #     @param new_family_name The new family name to set.
+    #     """
+    #     self._family_name = new_family_name
+        
+
+    # @property
+    # def created_at(self) -> datetime:
+    #     """Method to get the time when the person is created.
+
+    #     @return The time when the person is created.
+    #     """
+    #     return self._created_at
+
+    #     @property
+    # def type(self) -> str:
+    #     """Method to get the type of the person.
+        
+    #     @return The type of the person as a string.
+    #     """
+    #     return self._type
+    
+    # @type.setter
+    # def type(self, new_type: str) -> None:
+    #     """Method to set new type for the person.
+        
+    #     @param new_type The new type to set.
+    #     """
+    #     self._type = new_type
+    
