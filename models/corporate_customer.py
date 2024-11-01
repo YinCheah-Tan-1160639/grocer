@@ -1,5 +1,4 @@
 from . import db, Customer
-# from .customer import Customer
 from decimal import Decimal
 
 class CorporateCustomer(Customer):
@@ -10,41 +9,17 @@ class CorporateCustomer(Customer):
 
     id = db.Column(db.Integer, db.ForeignKey('customer.id'), primary_key=True, autoincrement=True)
     company_name = db.Column(db.String(100), nullable=False)
-    _credit_limit = db.Column(db.Numeric(10, 2), default=Decimal('1000.00'), nullable=False)
+    credit_limit = db.Column(db.Numeric(10, 2), default=Decimal('1000.00'), nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'corporate_customer',
     }
-
-    @property
-    def credit_limit(self) -> Decimal:
-        """! Method to get the corporate customer's credit limit.
-
-        @return The credit limit in Decimal.
-        """
-        return self._credit_limit
-
-    @credit_limit.setter
-    def credit_limit(self, new_limit: Decimal) -> None:
-        """! Method to set new credit limit for the corporate customer.
-
-        @param new_limit The new limit to set in Decimal type.
-        """
-        self._credit_limit = new_limit
-
-    def credit_limit_balance(self) -> Decimal:
-        """! Return the balance of the credit limit of the corporate customer.
-        
-        @return The balance of credit limit as a Decimal.
-        """
-        return self._credit_limit - self._balance
-
+    
     def can_place_order(self) -> bool:
         """! Method to check if a corporate customer can place an order.
         
         @return A boolean value indicating whether the corporate customer can place an order.
         """
-        #TODO Check if the owing balance is within the credit limit
         return self.balance < self.credit_limit
     
     def update_balance(self, amount: Decimal) -> None:
@@ -52,8 +27,8 @@ class CorporateCustomer(Customer):
         
         @param amount The total cost of order.
         """
-        #TODO check if the balance is within the credit limit
-        self.balance += amount
+        if self.can_place_order():
+            self.balance += amount
 
     def details(self) -> str:
         """! Method to get corporate customer details.

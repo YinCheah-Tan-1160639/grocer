@@ -7,13 +7,11 @@ from seed import insert_test_data
 
 def register_blueprints(app):
     # Import blueprints and register them
-    from routes import store_bp, staff_bp, customer_bp
+    from routes import store_bp, staff_bp, customer_bp, order_bp
     app.register_blueprint(store_bp)
     app.register_blueprint(staff_bp)
     app.register_blueprint(customer_bp)
-
-    # from routes.store_route import store_bp
-    # app.register_blueprint(store_bp)
+    app.register_blueprint(order_bp)
 
 
 def create_app():

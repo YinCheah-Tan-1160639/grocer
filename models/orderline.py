@@ -6,27 +6,8 @@ class OrderLine(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
+    item_id = db.Column(db.Integer, db.ForeignKey("item.id"))
 
     # Declare relationship with item and order
-    item = db.relationship('Item', back_populates='orderline', uselist = False)
+    item = db.relationship('Item', back_populates='orderline')
     order = db.relationship('Order', back_populates='orderlines')
-
-    # _item_id = db.Column(db.Integer, db.ForeignKey("item.id"))  # Foreign key to Item
-
-    # @property
-    # def order_id(self) -> int:
-    #     """! Method to get the order id that the orderline belongs to.
-
-    #     @return The order id as an integer.
-    #     """
-    #     return self._order_id
-    
-    # @property
-    # def item_id(self) -> int:
-    #     """! Method to get the item id that the orderline contains.
-
-    #     @return The item id as an integer.
-    #     """
-    #     return self._item_id
-
-    

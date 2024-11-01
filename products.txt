@@ -1,0 +1,22 @@
+Carrots, 1.99, True, kg
+Tomatoes, 4.99, True, kg
+Onions, 0.99, True, kg
+Gingers, 9.99, True, kg
+Garlics, 41.99, True, kg
+Kumaras, 5.99, True, kg
+Potatoes, 1.89, True, kg
+Carrots (1.5kg), 2.89, True, pack
+Cherry Tomatoes (250g), 4.99, True, pack
+Baby Spinach (130g), 3.99, True, pack
+Washed Lettuce (250g), 5.99, True, pack
+Shredded Cabbage (200g), 3.99, True, pack
+Beetroots (1kg), 2.99, False, pack
+Red Potatoes (5kg), 8.99, True, pack
+Rosemary (50g), 10.99, True, pack
+Cabbage, 2.89, True, each
+Brocolli, 1.99, True, each
+Cauliflower, 3.99, True, each
+Pumpkin, 5.99, True, each
+Cucumber, 3.99, True, each
+Capsicum, 2.99, True, each
+Eggplant, 10.99, True, each

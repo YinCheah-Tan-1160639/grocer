@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Order
+{% endblock %}
+
+{% block content %}
+<div class="col-11 justify-content-center p-2 mt-2">
+    <div class="d-flex justify-content-between mb-4 me-4">
+        <h3>New Order</h3>
+    </div>  
+    {# <form class="needs-validation" novalidate action="{{ url_for('customer.create_order') }}" method="POST">   #}                 
+        <form action="" method="POST">
+            <h5>Select Vegetables:</h5>
+            <div class="form-group">
+                <label for="veggie_id">Select Vegetables:</label>
+                <div class="row">
+                    <select name="veggie_id" id="veggie_id" required>
+                        <option value="" disabled selected>Select Veggies...</option>
+                        {% for veggie in veggies %}
+                            <option value="{{ veggie.id }}">{{ veggie.name }} - ${{ veggie.price }} / {{ veggie.unit }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="col-3">
+                        {% if veggie.unit == 'kg' %}
+                            <input type="number" class="form-control" id="{{ veggie['name'] }}" name="{{ veggie['name'] }}" min="0.1" step="0.1" max="999.99" placeholder="{{ veggie.unit }}" style="width: 100px;">
+                        {% else %}
+                            <input type="number" class="form-control" id="{{ veggie['name'] }}" name="{{ veggie['name'] }}" min="1" step="1" max="999.99" placeholder="{{ veggie.unit }}" style="width: 100px;">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>                 
+                
+                
+            <hr>
+    
+            <h2>Select Premade Boxes:</h2>
+            <ul>
+                {% for box in boxes %}
+                    <li>
+                        <label>
+                            <input type="checkbox" name="boxes" value="{{ box['size'] }}">
+                            {{ box['size'] }} Box - ${{ box['price'] }} 
+                            <input type="number" name="box_qty_{{ box['size'] }}" min="1" value="1" style="width: 50px;">
+                        </label>
+                    </li>
+                {% endfor %}
+            </ul>    
+        <button type="submit" class="btn btn-primary" onclick="return confirm('Please ensure you have entered the correct information, once submitted it cannot be reverted.');">
+            <i class="bi bi-create"></i> Submit Order
+        </button>
+    </form> 
+    <ul class="list-group list-group-flush">
+        {% for veggie in veggies %}
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-9">
+                    <label for="{{ veggie.name }}" class="form-label">{{ veggie.name }} - ${{ veggie.price }} / {{ veggie.unit }} </label>
+                </div>
+                <div class="col-3">
+                {% if veggie.unit == 'kg' %}
+                    <input type="number" class="form-control" id="{{ veggie['name'] }}" name="{{ veggie['name'] }}" min="0.1" step="0.1" max="999.99" placeholder="{{ veggie.unit }}" style="width: 100px;">
+                {% else %}
+                    <input type="number" class="form-control" id="{{ veggie['name'] }}" name="{{ veggie['name'] }}" min="1" step="1" max="999.99" placeholder="{{ veggie.unit }}" style="width: 100px;">
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>   
+</div>
+
+
+
+{% endblock %}

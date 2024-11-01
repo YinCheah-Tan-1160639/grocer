@@ -3,7 +3,7 @@ from decorators import role_required
 from models import Person
 
 from app import db
-from models.vegetable import Vegetable
+from app import hashing
 
 store_bp = Blueprint("store", __name__)
 
@@ -21,18 +21,24 @@ def login():
     if request.method == 'GET':
         return render_template("auth.html")
     else:
-        # get user input
-        username = request.form.get('username')
-        password = request.form.get('password')
-        user = Person.find_by_username(username)
-        if user and user.check_password(password):
-            session['user_id'] = user.id  # Store user ID in session
-            session['role'] = user.type  # Store user role in session
-            session['username'] = user.username # Store username in session
-            flash('You were successfully logged in!', 'success')
-            return redirect(url_for('store.dashboard'))
-        else:
-            flash('Invalid username or password!', 'error')
+        try:
+            # get user input
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            user = Person.query.filter_by(username=username).first()
+                    
+            if user and hashing.check_value(user.password, password, salt='abcd'):
+                session['user_id'] = user.id  # Store user ID in session
+                session['role'] = user.type  # Store user role in session
+                session['username'] = user.username # Store username in session
+                flash('You were successfully logged in!', 'success')
+                return redirect(url_for('store.dashboard'))
+            else:
+                flash('Invalid username or password!', 'error')
+                return redirect(url_for('store.login'))
+        except Exception:
+            flash('An error occurred while trying to log in. Please try again later.', 'error')
             return redirect(url_for('store.login'))
 
 

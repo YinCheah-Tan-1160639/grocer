@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Order
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12 mx-auto">
+        <!-- Order details -->
+        <div class="card overflow-auto internal border-0">
+            <h5 class="card-header">Order Details</h5>
+
+            <div class="card-body d-flex">
+                <dl class="row ms-2 me-2 col-sm-12">
+
+                    <dt class="col-sm-2">Date Created</dt>
+                    <dd class="col-sm-4">{{ order.date }}</dd>
+
+                    <dt class="col-sm-2">Order Ref. no.</dt>
+                    <dd class="col-sm-4">{{ order.id }}</dd>
+
+                    <dt class="col-sm-2">Name</dt>
+                    <dd class="col-sm-4">{{ order.customer.fullname() | title }}</dd>
+
+                    <dt class="col-sm-2">Delivery</dt>
+                    <dd class="col-sm-4">{{ "Yes" if order.is_delivery == 1 else "Pick up" }}</dd>
+                                                             
+                    <div>
+                        <hr>
+                    </div>
+                </dl>
+            </div>
+            <div class="table-responsive ms-4 me-4 mb-4">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:5%;">No.</th>
+                            <th style="width:45%;">Product</th>                                                                        
+                            <th class="text-end" style="width:5%;">Qty</th>
+                            <th class="text-end" style="width:15%;">Unit Price</th>
+                            <th class="text-end me-2" style="width:15%;">Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order_items %}
+                        <tr>
+                            <td class="text-center">{{ loop.index }}</td>
+                            <td>{{ item.name | title }}</td>                                    
+                            <td class="text-end">{{ item.qty }}</td>
+                            <td class="text-end">{{ item.price }}</td>
+                            <td class="text-end me-2">{{ item.calculate_subtotal() }}</td>
+                        </tr>
+                        {% endfor %}                                
+
+                        <tr>
+                            <th scope="row" colspan="4" class="border-0 text-end">
+                                Subtotal: 
+                            </th>
+                            <td class="border-0 text-end">{{ "%.2f"|format(order.subtotal) }}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" colspan="4" class="border-0 text-end">
+                                Total Saved:
+                            </th>
+                            <td class="border-0 text-end">{{ "%.2f"|format(discount) }}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" colspan="4" class="border-0 text-end">
+                                Shipping Fee:
+                            </th>
+                            <td class="border-0 text-end">{{ "%.2f"|format(order.shipping_fee ) }} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" colspan="4" class="border-0 text-end">
+                                Includes GST of 
+                            </th>
+                            <td class="border-0 text-end">{{ "%.2f"|format(order.gst) }} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" colspan="4" class="border-0 text-end">
+                                Total:
+                            </th>
+                            <td class="border-0 text-end"><h6 class="m-0 fw-semibold">{{ "NZD %.2f"|format(order.total) }}</h6></td>
+                        </tr>
+                        <!-- end tr -->
+                    </tbody>
+                </table>
+            </div>
+        </div>                        
+        <div class="d-flex justify-content-start mt-2 mb-3">
+            <a href="{{url_for('staff.list_orders')}}" class="link-back">
+                <i class="bi bi-arrow-left"></i> Back to Order List
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

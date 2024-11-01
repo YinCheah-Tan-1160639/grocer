@@ -39,20 +39,19 @@ def view_customer(customer_id):
                         role=session['role']
                         )
 
-@staff_bp.route("/list_veggies")
-@role_required('staff')
-def list_veggies():   
-    veggies = Product().get_all_vegetables()
-    return render_template("staff/veggie/list.html", 
-                        veggies=veggies, 
-                        role=session['role']
-                        )
+# @staff_bp.route("/list_veggies")
+# @role_required('staff')
+# def list_veggies():   
+#     veggies = Product().get_all_vegetables()
+#     return render_template("staff/veggie/list.html", 
+#                         veggies=veggies, 
+#                         role=session['role']
+#                         )
 
-@staff_bp.route("/list_premade_boxes")
-@role_required('staff')
-def list_premade_boxes():   
-    boxes = Product().get_all_premade_boxes()
-    return render_template("staff/premadebox/list.html", 
-                        boxes=boxes, 
-                        role=session['role']
-                        )
+# @staff_bp.route("/list_premade_boxes")
+# @role_required('staff')
+# def list_premade_boxes():   
+#     boxes = Product().get_all_premade_boxes()
+#     return render_template("staff/premadebox/list.html", 
+#                         boxes=boxes, 
+#                         role=session['role'])

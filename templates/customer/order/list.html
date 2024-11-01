@@ -39,11 +39,15 @@ Orders
             <tbody>
             {% for order in orders %}
                 <tr class="text-center">
-                    <td>{{ order.date }}</td>
+                    <td>{{ order.date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ order.id }}</td>
-                    <td>{{ order.is_delivery }}</td>
+                    <td>{{ "Delivery" if order.is_delivery else "Pickup" }}</td>
                     <td>{{ order.status }}</td>
                     <td>
+                        <a class="btn btn-primary btn-sm me-2"
+                        href="{{ url_for('customer.view_order', order_id=order.id) }}">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
                         {# 
                         <a class="btn btn-primary btn-sm me-2"
                         href="{{ url_for('customer.view_order', order_id=order.id) }}">
@@ -61,8 +65,9 @@ Orders
                             </button>
                         </form>
                         {% endif %}
+                        <!-- add confirm order button for order that is not submitted -->
                         <a class="btn btn-primary btn-sm me-2"
-                        href="{{ url_for('customer.update_order', order_id=order.id) }}">
+                        href="{{ url_for('customer.check_out', order_id=order.id) }}">
                             <i class="bi bi-eye"></i> Pay Now
                         </a>
                         #}

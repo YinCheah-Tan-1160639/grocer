@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <div class="container-fluid">        
         <a class="navbar-brand" href="{{ url_for('store.index') }}">
             <strong>
@@ -18,11 +18,6 @@
                 </li>                
                 {% if role in ('customer', 'corporate_customer') %}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url_for('customer.profile') }}">
-                        Profile
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('customer.list_veggies') }}">
                         Vegetables
                     </a>
@@ -33,17 +28,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="">
+                    <a class="nav-link text-white" href="{{ url_for('order.create_order') }}">
+                        New Order
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('customer.list_orders') }}">
                         My Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('customer.profile') }}">
+                        Profile
                     </a>
                 </li>
                 {% endif %}
                 {% if role == 'staff' %}
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url_for('staff.profile') }}">
-                        Profile
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         Orders
@@ -67,6 +67,11 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">
                         Report
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('staff.profile') }}">
+                        Profile
                     </a>
                 </li>
                 {% endif %}                                

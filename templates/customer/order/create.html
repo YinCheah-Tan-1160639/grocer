@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Order
+{% endblock %}
+
+{% block content %}
+<div class="col-11 justify-content-center p-2 mt-2">
+    <div class="d-flex justify-content-between">
+        <h3>New Order</h3>
+    </div>  
+    {# <form class="needs-validation" novalidate action="{{ url_for('order.create_order') }}" method="POST">   #}                 
+        <form action="{{ url_for('order.create_order') }}" method="post">
+            <h5>Select Premade Boxes:</h5>
+            <ul class="list-group list-group-flush">
+                {% for box in boxes %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-9">
+                            <label for="{{ box.size }}" class="form-label">{{ box.size }} - ${{ box.price }} / box </label>
+                        </div>
+                        <div class="col-3">
+                            <input type="number" class="form-control" id="{{ box.size }}"name="{{ box.size }}" min="1" step="1" max="999" placeholder="box" style="width: 100px;">
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <hr>    
+            <h5>Select Vegetables:</h5>                
+            <ul class="list-group list-group-flush">
+                {% for veggie in veggies %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-9">
+                            <label for="{{ veggie.name }}" class="form-label">{{ veggie.name }} - ${{ veggie.price }} / {{ veggie.unit }} </label>
+                        </div>
+                        <div class="col-3">
+                        {% if veggie.unit == 'kg' %}
+                            <input type="number" class="form-control" id="{{ veggie.name }}" name="{{ veggie.name }}" min="0.1" step="0.1" max="999.99" placeholder="{{ veggie.unit }}" style="width: 100px;">
+                        {% else %}
+                            <input type="number" class="form-control" id="{{ veggie.name }}" name="{{ veggie.name }}" min="1" step="1" max="999" placeholder="{{ veggie.unit }}" style="width: 100px;">
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="row mt-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="delivery" id="delivery">
+                    <label class="form-check-label" for="delivery">
+                        Delivery
+                    </label>
+                    <small class="text-body-secondary">Delivery only available within 20km radius.</small>
+                  </div>
+            </div>                               
+            <button type="submit" class="btn btn-primary w-100 mt-2">
+                <i class="bi bi-create"></i> Submit Order
+            </button>
+    </form>    
+</div>
+
+{% endblock %}

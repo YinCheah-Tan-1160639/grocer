@@ -5,12 +5,9 @@ class PremadeBox(Item):
     """! The class representing a PremadeBox object."""
     __tablename__ = 'premadebox'
 
-    # class attribute
-    BOXES = {'small': 25.00, 'medium': 40.00, 'large': 60.00}
-
     id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True, autoincrement=True)
     size = db.Column(db.String(50), nullable=False)
-    price_per_box = db.Column(db.Numeric(6, 2), nullable=False)
+    price = db.Column(db.Numeric(6, 2), nullable=False)
     no_of_boxes = db.Column(db.Integer, nullable=False)
     # Add relationship to vegetables associated with the premadebox
     vegetables = db.relationship('Vegetable', back_populates='premadebox', foreign_keys=[Vegetable.premadebox_id])
@@ -19,12 +16,12 @@ class PremadeBox(Item):
         'polymorphic_identity': 'premadebox'
     }
 
-    def calculate_item_subtotal(self):
+    def calculate_subtotal(self):
         """! Calculate subtotal for the number of boxes ordered.
         
         @return The subtotal of item line.
         """
-        return self.price_per_box * self.no_of_boxes
+        return self.price * self.no_of_boxes
 
     def box_content(self) -> str:
         """! Return the list of vegetables contain in the premade box.
@@ -38,7 +35,7 @@ class PremadeBox(Item):
         
         @return A string representing the price per box.
         """
-        return f"${self.price_per_box:.2f} per box"
+        return f"${self.price:.2f} per box"
 
     def __str__(self) -> str:
         """! To get the string representation of the Premade box object.
@@ -65,20 +62,20 @@ class PremadeBox(Item):
     #     self._size = new_size
 
     # @property
-    # def price_per_box(self) -> Decimal:
+    # def price(self) -> Decimal:
     #     """! Method to get the price per box.
         
     #     @return The price per box as a Decimal.
     #     """
-    #     return self._price_per_box
+    #     return self._price
     
-    # @price_per_box.setter
-    # def price_per_box(self, new_price: Decimal) -> None:
+    # @price.setter
+    # def price(self, new_price: Decimal) -> None:
     #     """! Method to set new price per box.
         
     #     @param new_price The new price to set.
     #     """
-    #     self._price_per_box = new_price
+    #     self._price = new_price
     
     # @property
     # def no_of_boxes(self) -> int:
