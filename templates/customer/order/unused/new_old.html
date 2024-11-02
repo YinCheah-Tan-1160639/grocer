@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Order
+{% endblock %}
+
+{% block content %}
+<div class="col-11 justify-content-center p-2 mt-2">
+    <div class="d-flex justify-content-between">
+        <h3>New Order</h3>
+    </div> 
+    <div class="card">                
+        <form action="{{ url_for('order.create_order') }}" method="POST">
+            <div class="mb-3">
+                <label for="veggie_kg" class="form-label">Vegetable by weight:</label>                        
+                <select class="form-select" id="veggie_kg" name="veggie_kg">
+                        <option value="" disabled selected>Select...</option>
+                        {% for w_vg in weight_veggies %}
+                        <option value="{{w_vg.id}}">{{w_vg.name}}/{{w_vg.unit}}</option>
+                        {% endfor %}
+                </select>
+                <input type="number" class="form-control" id="weight" name="weight" min="0.1" step="0.1" max="999.99" placeholder="kg.." style="width: 100px;">                 
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Add
+            </button>
+        </form>
+        <form action="{{ url_for('order.create_order') }}" method="POST">
+            <div class="mb-3">
+                <label for="veggie_kg" class="form-label">Vegetable by weight:</label>                        
+                <select class="form-select" id="veggie_kg" name="veggie_kg">
+                        <option value="" disabled selected>Select...</option>
+                        {% for vg in weight_veggies %}
+                        <option value="{{vg.id}}">{{vg.name}}</option>
+                        {% endfor %}
+                </select>
+                <input type="number" class="form-control" id="weight" name="weight" min="0.1" step="0.1" max="999.99" placeholder="kg.." style="width: 100px;">                 
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Add
+            </button>
+        </form>
+    </div>
+    <div class="row mt-2">
+        <div class="table-responsive ms-4 me-4 mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width:5%;">No.</th>
+                        <th style="width:45%;">Product</th>                                                                        
+                        <th class="text-end" style="width:5%;">Qty</th>
+                        <th class="text-end" style="width:15%;">Unit Price</th>
+                        <th class="text-end me-2" style="width:15%;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.orderlines %}
+                    <tr>
+                        <td class="text-center">{{ loop.index }}</td>
+                        <td>{{ item.name | title }}</td>                                    
+                        <td class="text-end">{{ item.quantity if item.quantity else item.weight }}</td>
+                        <td class="text-end">{{ item.price }}</td>
+                        {# <td class="text-end me-2">{{ item.calculate_subtotal() }}</td> #}
+                    </tr>
+                    {% endfor %} 
+                    <tr>
+                        <th scope="row" colspan="4" class="border-0 text-end">
+                            Corporate Discount:
+                        </th>
+                        <td class="text-end me-2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" colspan="4" class="border-0 text-end">
+                            Total:
+                        </th>
+                        <td class="text-end me-2">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <form action="" method="POST">
+            <div class="row mt-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="delivery" id="delivery">
+                    <label class="form-check-label" for="delivery">
+                        Delivery
+                    </label>
+                    <small class="text-body-secondary">Delivery only available within 20km radius.</small>
+                  </div>
+            </div>               
+            <button type="submit" class="btn btn-primary">Check Out</button>
+        </form> 
+    </div>        
+</div>
+
+{% endblock %}
+
+    

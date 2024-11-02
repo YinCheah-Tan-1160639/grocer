@@ -5,38 +5,69 @@ Orders
 {% endblock %}
 
 {% block content %}
-{% if order.customer_id == user_id %} 
-<h1>Confirm Your Order</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for orderline in order.orderlines %}
+{% if order.customer_id == user_id %}
+<div>
+    <h5>Order Summary</h5>
+    <div class="table-responsive ms-4 me-4 mb-4">
+        <table class="table table-hover table-sm">
+            <thead>
                 <tr>
-                    <td>{{ orderline.item.name }}</td>
-                    <td>
-                        {% if orderline.item.weight %}
-                            {{ orderline.item.weight }}
-                        {% else %}
-                            {{ orderline.item.quantity }}
-                        {% endif %}
-                    </td>
-                    <td>${{ "$%.2f" | format(orderline.item.price) }}</td>
-                    <td>${{ "$%.2f" | format(orderline.item.calculate_subtotal()) }}</td>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <h3>Total Amount: {{ "$%.2f" | format(total) }}</h3>
-    <form action="{{ url_for('order.confirm_order', order_id=order.id) }}" method="POST">
-        <button type="submit">Confirm Order</button>
-    </form>
-    {#<a href="{{ url_for('customer.edit_order') }}">Edit Order</a> #}
+            </thead>
+            <tbody>
+                {% for orderline in order.orderlines %}
+                    <tr>
+                        <td>
+                            {{ orderline.item.name if orderline.item.name else orderline.item.box_name() }}
+                        </td>
+                        <td>                            
+                            {{ orderline.item.quantity_display() }}
+                        </td>
+                        <td>{{ orderline.item.price_display() }}</td>
+                        <td>{{ orderline.item.subtotal_display() }}</td>
+                    </tr>
+                {% endfor %}
+                    <tr>
+                        <th scope="row" colspan="3" class="border-0 text-end">
+                            Discount:
+                        </th>
+                        <td class="text-end me-2">
+                            {{ "%.2f" | format(discount) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" colspan="3" class="border-0 text-end">
+                            Total: 
+                        </th>
+                        <td class="text-end me-2">
+                            {{ "$%.2f" | format(total) }}
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <div>
+            <form action="{{ url_for('order.confirm_order', order_id=order.id) }}" method="POST">
+                <div class="row mt-2">
+                    <div class="form-check ms-4">
+                        <input class="form-check-input" type="checkbox" value="delivery" id="delivery" name="delivery">
+                        <label class="form-check-label" for="delivery">
+                            Delivery (Subject to $10.00 delivery fee)
+                        </label>                    
+                    </div>
+                    <div>
+                        <small class="text-body-secondary">Delivery only available within 20km radius.</small>
+                    </div>
+                </div>   
+                <button type="submit" class="btn btn-primary mt-2">Confirm Order</button>
+            </form>
+        </div>
+    </div>
+    
+    {#<a href="{{ url_for('order.edit_order') }}">Edit Order</a> #}
+</div>
 {% endif %}
 {% endblock %}

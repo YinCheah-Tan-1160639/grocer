@@ -22,6 +22,20 @@ class WeightedVeggie(Vegetable):
         @return A string representing the price per kilogram.
         """
         return f"${self.price:.2f}/kg"
+    
+    def subtotal_display(self) -> str:
+        """! Return the subtotal display of the vegetable. Example: $30.00.
+        
+        @return A string representing the subtotal of the item line.
+        """
+        return f"${self.calculate_subtotal():.2f}"
+    
+    def quantity_display(self) -> str:
+        """! Return the quantity display of the vegetable. Example: 2 kg.
+        
+        @return A string representing the quantity of the item line.
+        """
+        return f"{self.weight} kg"
 
     def calculate_subtotal(self) -> Decimal:
         """! Calculate subtotal for the weighted veggie ordered.

@@ -8,7 +8,7 @@ def role_required(*roles):
         def decorated_function(*args, **kwargs):
             user_role = session.get('role')  # Get user type from session
             if user_role not in roles:
-                flash('You do not have permission to access this page.', 'danger')
+                flash("You do not have permission to access this page.", "error")
                 return redirect(url_for('store.login'))  # Redirect to the login page
             return f(*args, **kwargs)
         return decorated_function

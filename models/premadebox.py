@@ -36,13 +36,34 @@ class PremadeBox(Item):
         @return A string representing the price per box.
         """
         return f"${self.price:.2f} per box"
+    
+    def quantity_display(self) -> str:
+        """! Return the quantity display of the premade box. Example: 2 boxes.
+        
+        @return A string representing the quantity of the item line.
+        """
+        return f"{self.no_of_boxes} box" if self.no_of_boxes == 1 else f"{self.no_of_boxes} boxes"
+    
+    def subtotal_display(self) -> str:
+        """! Return the subtotal display of the premade box. Example: $30.00.
+        
+        @return A string representing the subtotal of the item line.
+        """
+        return f"${self.calculate_subtotal():.2f}"
+    
+    def box_name(self) -> str:
+        """! Return the name of the premade box.
+        
+        @return The name of the premade box.
+        """
+        return f"{self.size} Premade Box"
 
     def __str__(self) -> str:
         """! To get the string representation of the Premade box object.
         
-        @return The premadebox object as a string including name and price.
+        @return The premadebox object as a string.
         """
-        return f"{self.size.capitalize()} box: {self.price_display()}"
+        return f"{self.size} Premade Box"
     
     
     # @property

@@ -35,7 +35,7 @@ class PremadeBoxProduct(Product):
     size = db.Column(db.String(20), nullable=False) # 'small', 'medium', 'large'
     price = db.Column(db.Numeric(6, 2), nullable=False)
 
-    # Relationship to hold the components of the premade box
+    # Declare relationship with BoxComponent
     components = db.relationship('BoxComponent', back_populates='box')
 
     __mapper_args__ = {
@@ -51,5 +51,6 @@ class BoxComponent(db.Model):
     vegetable_id = db.Column(db.Integer, db.ForeignKey('vegetable_product.id'))
     quantity = db.Column(db.Numeric(10, 2), nullable=False)  # Quantity of the vegetable in the box
 
+    # Declare relationships
     box = db.relationship('PremadeBoxProduct', back_populates='components')
     vegetable = db.relationship('VegetableProduct')

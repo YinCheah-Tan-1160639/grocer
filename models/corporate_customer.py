@@ -15,20 +15,23 @@ class CorporateCustomer(Customer):
         'polymorphic_identity': 'corporate_customer',
     }
     
-    def can_place_order(self) -> bool:
+    def remaining_balance(self) -> Decimal:
+        """! Method to get the remaining balance of the corporate customer."""
+        return self.credit_limit - self.balance
+    
+    def can_place_order(self, amount: Decimal) -> bool:
         """! Method to check if a corporate customer can place an order.
         
         @return A boolean value indicating whether the corporate customer can place an order.
         """
-        return self.balance < self.credit_limit
+        return amount <= self.remaining_balance()
     
     def update_balance(self, amount: Decimal) -> None:
         """! Method to add total cost of an order to the corporate customer's balance.
         
         @param amount The total cost of order.
         """
-        if self.can_place_order():
-            self.balance += amount
+        self.balance += amount
 
     def details(self) -> str:
         """! Method to get corporate customer details.

@@ -1,18 +1,18 @@
 from database import db
 
-from models import Staff, vegetable
+from models import Staff
 from models import Customer
 from models import CorporateCustomer
 from models import Order
 from models import OrderLine
 from models import PackVeggie
 from models import WeightedVeggie
-# from models.product import Product
 from models import UnitPriceVeggie
+from models import CreditCard, DebitCard
+from models.premadebox import PremadeBox
 from models.product import VegetableProduct
 from models.product import PremadeBoxProduct
 from models.product import BoxComponent
-# from models import Payment
 
 # Load and parse a text file to create product objects
 def load_products(txt_file):
@@ -96,7 +96,8 @@ def insert_test_data():
         email="cust.one@example.com",
         username='cust_1', 
         password='1234', 
-        address='1234 Main St'
+        address='1234 Main St',
+        balance=14.98
     ))
     
     customers.append(Customer(
@@ -226,233 +227,139 @@ def insert_test_data():
     # Commit box components to the database
     db.session.commit()
 
-    # orders.append(Order(
-    #     customer_id=4,
-    #     is_delivery=False,
-    #     is_confirmed=True,
-    #     is_charge_to_account=False,
-    #     status='Paid'))
-
-    # # orderlines.append(OrderLine(
-    # #     order_id=1)) 
+    orders.append(Order( # order 1
+        customer_id=4,
+        is_delivery=False,
+        is_charge_to_account=False,
+        status='Confirmed'))
     
-    # items.append(WeightedVeggie(
-    #     name='Carrots',
-    #     price = 1.99,
-    #     weight = 0.5
-    # ))
-
-    # orderlines.append(OrderLine(
-    #     order_id=1,
-    #     item_id=1))
+    orders.append(Order( # order 2
+        customer_id=4,
+        is_delivery=False,
+        is_charge_to_account=True,
+        status='Ready for Pickup'))
     
-    # orderline_items.append(PackVeggie(
-    #     orderline_id=2,
-    #     name='Baby Spinach (130g)',
-    #     price = 3.99,
-    #     no_of_pack = 2
-    # ))
-
-    # orderlines.append(OrderLine(
-    #     order_id=1))
+    orders.append(Order( # order 3
+        customer_id=4,
+        is_delivery=True,
+        is_charge_to_account=False,
+        status='Confirmed'))
     
-    # orderline_items.append(UnitPriceVeggie(
-    #     orderline_id=3,
-    #     name='Cabbage',
-    #     price = 2.89,
-    #     quantity = 1
-    # ))
-
-    # orderlines.append(OrderLine(
-    #     order_id=1))
+    orders.append(Order( # order 4
+        customer_id=4,
+        is_delivery=False,
+        is_charge_to_account=True,
+        status='Cancelled'))
     
-    # orderline_items.append(WeightedVeggie(
-    #     orderline_id=4,
-    #     name='Tomatoes',
-    #     price = 4.99,
-    #     weight = 1.2
-    # ))  
+    orders.append(Order( # order 5
+        customer_id=9,
+        is_delivery=False,
+        is_charge_to_account=False,
+        status='Ready for Pickup'))
     
-    # orders.append(Order(
-    #     customer_id=4))
+    db.session.add_all(orders)
     
-    # orderlines.append(OrderLine(
-    #     order_id=2))
+    items.append(WeightedVeggie( # item 1
+        name='Carrots',
+        price = 1.99,
+        weight = 1.0
+    ))
+
+    items.append(WeightedVeggie( # item 2
+        name='Tomatoes',
+        price = 4.99,
+        weight = 1.0
+    ))
+
+    items.append(WeightedVeggie( # item 3
+        name='Gingers',
+        price = 9.99,
+        weight = 1.0
+    ))
+
+    items.append(PremadeBox( # item 4
+        size='Small',
+        price = 20.00,
+        no_of_boxes = 1
+    ))
+
+    items.append(UnitPriceVeggie( # item 5
+        name='Cabbage',
+        price = 2.89,
+        quantity = 1
+    ))
+
+    items.append(PackVeggie( # item 6
+        name='Baby Spinach (130g)',
+        price = 3.99,
+        no_of_pack = 10
+    ))
+
+    items.append(WeightedVeggie( # item 7
+        name='Onions',
+        price = 0.99,
+        weight = 5.0
+    ))
+
+    db.session.add_all(items)
+
+    orderlines.append(OrderLine(
+        order_id=1,
+        item_id=1))
     
-    # orderline_items.append(WeightedVeggie(
-    #     orderline_id=5,
-    #     name='Gingers',
-    #     price = 9.99,
-    #     weight = 0.2
-    # ))
-
-    # orderlines.append(OrderLine(
-    #     order_id=2))
+    orderlines.append(OrderLine(
+        order_id=2,
+        item_id=2))
     
-    # orderline_items.append(PackVeggie(
-    #     orderline_id=6,
-    #     name='Washed Lettuce (250g)',
-    #     price = 5.99,
-    #     no_of_pack = 1
-    # ))
+    orderlines.append(OrderLine(
+        order_id=2,
+        item_id=3))
     
-    # orders.append(Order(
-    #     customer_id=5))
+    orderlines.append(OrderLine(
+        order_id=3,
+        item_id=4))
     
-    # orderlines.append(OrderLine(
-    #     order_id=3))
+    orderlines.append(OrderLine(
+        order_id=4,
+        item_id=5))
     
-    # orderline_items.append(WeightedVeggie(
-    #     orderline_id=7,
-    #     name='Onions',
-    #     price = 0.99,
-    #     weight = 0.3
-    # ))
+    orderlines.append(OrderLine(
+        order_id=5,
+        item_id=6))
     
-    # orders.append(Order(
-    #     customer_id=7))
+    orderlines.append(OrderLine(
+        order_id=5,
+        item_id=7))
     
-    # orderlines.append(OrderLine(
-    #     order_id=4))
+    db.session.add_all(orderlines)
     
-    # orderline_items.append(PackVeggie(
-    #     orderline_id=8,
-    #     name='Shredded Cabbage (200g)',
-    #     price = 3.99,
-    #     no_of_pack = 1
-    # ))
+    payments.append(CreditCard(
+        order_id=1,
+        amount=1.99,
+        customer_id=4,
+        card_type='Visa',
+        card_number='1234567890123456',
+        card_expiry='12/25'
+    ))
 
-    # orderlines.append(OrderLine(
-    #     order_id=4))
-    
-    # orderline_items.append(UnitPriceVeggie(
-    #     orderline_id=9,
-    #     name='Brocolli',
-    #     price = 1.99,
-    #     quantity = 1
-    # ))
+    payments.append(DebitCard(
+        order_id=3,
+        amount=30.00,
+        customer_id=4,
+        bank_name='Bank A',
+        card_number='1234567890123456'
+    ))
 
-    # orderlines.append(OrderLine(
-    #     order_id=4))
-    
-    # orderline_items.append(WeightedVeggie(
-    #     orderline_id=10,
-    #     name='Kumaras',
-    #     price = 5.99,
-    #     weight = 2.0
-    # ))  
+    payments.append(CreditCard(
+        order_id=5,
+        amount=40.37,
+        customer_id=9,
+        card_type='Mastercard',
+        card_number='1234567890123456',
+        card_expiry='12/25'
+    ))
 
-    
-
-    # w_veggie1 = WeightedVeggie(
-    #     orderline_id=1,
-    #     name='Carrots', 
-    #     price_per_kg=2.89, 
-    #     weight=0.5
-    # )
-
-    # w_veggie2 = WeightedVeggie(
-    #     orderline_id=2,
-    #     name='Tomatoes', 
-    #     price_per_kg=4.99, 
-    #     weight=1.2
-    # )
-
-    # w_veggie3 = WeightedVeggie(
-    #     orderline_id=3,
-    #     name='Gingers', 
-    #     price_per_kg=9.99, 
-    #     weight=0.2
-    # )
-
-    # w_veggie4 = WeightedVeggie(
-    #     orderline_id=4,
-    #     name='Onions', 
-    #     price_per_kg=0.99, 
-    #     weight=0.3
-    # )
-
-    # w_veggie5 = WeightedVeggie(
-    #     orderline_id=5,
-    #     name='Kumaras', 
-    #     price_per_kg=5.99, 
-    #     weight=2.0
-    # )
-
-    # p_veggie1 = PackVeggie(
-    #     orderline_id=6,
-    #     name='Carrots (1.5kg)', 
-    #     price_per_pack=2.89, 
-    #     no_of_pack=0.5
-    # )
-
-    # p_veggie2 = PackVeggie(
-    #     orderline_id=7,
-    #     name='Baby Spinach (130g)', 
-    #     price_per_pack=3.99, 
-    #     no_of_pack=2
-    # )
-
-    # p_veggie3 = PackVeggie(
-    #     orderline_id=8,
-    #     name='Washed Lettuce (250g)', 
-    #     price_per_pack=5.99, 
-    #     no_of_pack=1
-    # )
-
-    # p_veggie4 = PackVeggie(
-    #     orderline_id=9,
-    #     name='Shredded Cabbage (200g)', 
-    #     price_per_pack=3.99, 
-    #     no_of_pack=1
-    # )
-
-    # p_veggie5 = PackVeggie(
-    #     orderline_id=10,
-    #     name='Red Potatoes (5kg)', 
-    #     price_per_pack=10.99, 
-    #     no_of_pack=1
-    # )
-
-    # u_veggie1 = UnitPriceVeggie(
-    #     orderline_id=11,
-    #     name='Cabbage', 
-    #     price_per_unit=2.89,
-    #     quantity=1
-    # )
-
-    # u_veggie2 = UnitPriceVeggie(
-    #     orderline_id=12,
-    #     name='Brocolli', 
-    #     price_per_unit=1.99,
-    #     quantity=1
-    # )
-
-    # u_veggie3 = UnitPriceVeggie(
-    #     orderline_id=13,
-    #     name='Cauliflower', 
-    #     price_per_unit=3.99,
-    #     quantity=1
-    # )
-
-    # u_veggie4 = UnitPriceVeggie(
-    #     orderline_id=14,
-    #     name='Pumpkin', 
-    #     price_per_unit=5.99,
-    #     quantity=1
-    # )
-
-    # u_veggie5 = UnitPriceVeggie(
-    #     orderline_id=15,
-    #     name='Cucumber', 
-    #     price_per_unit=3.99,
-    #     quantity=2
-    # )
-
-    # db.session.add_all(orders)
-    # db.session.add_all(items)
-    # db.session.add_all(orderlines)
-    
+    db.session.add_all(payments)
 
     # Commit to save data
     db.session.commit()

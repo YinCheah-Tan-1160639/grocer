@@ -8,22 +8,33 @@ Vegetables
 <div class="container-fluid p-2">
     <div class="d-flex justify-content-between mt-2 mb-3 me-4">
         <h3>Vegetable List</h3>
+        {%if role == "staff"%}
         <div class="d-flex">
             <div class="me-2">
                 <!-- Search Form -->
-                <!-- <form action=""method="get">
-                    <div class="input-group mb-3">
-                        <input class="form-control" name="search_query" placeholder="Email" type="text"
-                               value="">
+                <form method="get" action="#" class="d-flex align-items-start">                    
+                    <div class="input-group">
+                        <select id="available" name="available" class="form-select">
+                            <option value="" selected disabled> Filter </option>                            
+                            <option value="1" >Available</option>
+                            <option value="0" >Unavailable</option>
+                        </select>
                         <div class="input-group-prepend">
-                            <button class="btn btn-warning" type="submit">
-                                <i class="bi bi-search"></i> Search
+                            <button type="submit" class="btn btn-primary">
+                                Filter 
                             </button>
                         </div>
-                    </div>
-                </form> -->
+                    </div>                
+                </form>
+            </div>
+            <!-- link to show all -->
+            <div class="me-2">
+                <a href="{{url_for('staff.list_veggies')}}" class="btn btn-primary">
+                     View All
+                </a>
             </div>
         </div>
+        {%endif%}
     </div>
     <div class="table-responsive me-4">
         <table class="table table-hover">

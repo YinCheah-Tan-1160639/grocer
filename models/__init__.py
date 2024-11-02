@@ -3,7 +3,7 @@ from app import db
 from app import hashing
  
 # Import individual models
-from .product import Product
+from .product import Product, VegetableProduct, PremadeBoxProduct, BoxComponent
 from .item import Item
 from .vegetable import Vegetable
 from .weighted_veggie import WeightedVeggie
@@ -26,6 +26,9 @@ __all__ = [
     'db', 
     'hashing',
     'Product',
+    'VegetableProduct',
+    'PremadeBoxProduct',
+    'BoxComponent',
     'Item', 
     'Vegetable',
     'WeightedVeggie',

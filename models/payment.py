@@ -12,7 +12,7 @@ class Payment(db.Model):
     date = db.Column(db.DateTime(timezone=True), server_default=func.now())
     amount = db.Column(db.Numeric(10, 2), nullable=False)    
     customer_id = db.Column(db.Integer, db.ForeignKey("customer.id"))
-    order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
+    order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=True)
     type = db.Column(db.String(50))  # 'credit_card', 'debit_card'
     
     # Declare relationship with customer and order

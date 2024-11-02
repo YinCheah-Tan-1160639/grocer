@@ -1,7 +1,8 @@
+import re
 from . import db
-from sqlalchemy.sql import func
-# from datetime import datetime
 from . import hashing
+from sqlalchemy.sql import func
+
 
 class Person(db.Model):
     """! The class representing a person."""
@@ -33,7 +34,18 @@ class Person(db.Model):
 
         @param new_password The new password to set.
         """
+        # if not self.validate_password(new_password):
+        #     raise ValueError("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and one digit.")        
         self._password = hashing.hash_value(new_password, salt='abcd')
+
+    @staticmethod
+    def validate_password(password: str) -> bool:
+        """! Method to validate a password.
+
+        @param password The password to validate
+        @return True if the password is valid, False otherwise
+        """
+        return len(password) >= 8 and re.search(r'[A-Z]', password) and re.search(r'[a-z]', password) and re.search(r'\d', password) 
     
     def __str__(self) -> str:
         return f"<Name: {self.fullname()}, Role: {self.type}>"
