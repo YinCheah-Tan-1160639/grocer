@@ -5,7 +5,7 @@ Profile
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5 p-2">
+<div class="container p-2">
     <div class="row mt-4">
         <div class="col-lg-8 mx-auto">
             <!-- Display if user is logged in -->
@@ -25,8 +25,6 @@ Profile
                         <li class="list-group-item">Outstanding Balance: {{ user.balance }}</li>
                         {% if role == 'corporate_customer' %}
                         <li class="list-group-item">Company Name: {{ user.company_name }}</li>
-                        <li class="list-group-item">Address: {{ user.address }}</li>
-                        <li class="list-group-item">Outstanding Balance: {{ user.balance }}</li>
                         <li class="list-group-item">Credit Limit: {{ user.credit_limit }}</li>
                         {% endif %}
                     </ul>

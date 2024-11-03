@@ -7,22 +7,21 @@ Payment
 {% block content %}
 <div class="container p-2">
 <!-- Payment section -->
-<div class="container" style="width:500px">
-    <h4 class="">
-        Payment
-    </h4>
-    <div class="accordion" id="accordionExample">
+<div class="row mt-4">
+    <div class="col-lg-6 mx-auto">
+    <h3 class="">Payment</h3>
+    <div class="accordion" id="accordionPayment">
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     Charge to account
                 </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment">
                 <div class="accordion-body">
-                    <form class="row" action="{{ url_for('payment.charge_to_account', order_id=order_id) }}" method="POST">
+                    <form class="row text-center" action="{{ url_for('payment.charge_to_account', order_id=order_id) }}" method="POST">
                         <input type="hidden" name="payment_type" value="charge_to_account">
-                        <div class="row">
+                        <div class="col text-center">
                             <button type="submit" class="btn btn-primary w-100"> Charge {{ "$%.2f" | format(total)}} to Account </button>
                         </div>	
                     </form>
@@ -35,25 +34,27 @@ Payment
                 Debit Card
                 </button>
             </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionPayment">
                 <div class="accordion-body">
                     <form class="row" action="{{ url_for('payment.card_payment', order_id=order_id) }}" method="POST">
                         <input type="hidden" name="payment_type" value="debit_card">
                         <div class="form-group">
-                            <label for="bank">Bank</label>
-                            <select name="bank" id="bank" required>
+                            <label for="bank" class="form-label">Bank</label>
+                            <select class="form-select" name="bank" id="bank" required>
                                 <option value="" disabled selected>Select bank...</option>
                                 {% for bank in banks %}
                                     <option value="{{ bank }}">{{ bank }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-2">
                             <label for="card_no" class="form-label">Card Number</label> 
-                            <input type="text" name="card_no" placeholder="1234 5678 9012 3457" id="card_no" minlength="19" maxlength="19" pattern="[\d ]{19}" required>
+                            <input type="text" class="form-control" name="card_no" placeholder="1234 5678 9012 3457" id="card_no" minlength="19" maxlength="19" pattern="[\d ]{19}" required>
                         </div>
-                        <div class="row">
-                            <button type="submit" class="btn btn-primary w-100"> Pay ${{ "$%.2f" | format(total)}}</button>
+                        <div class="mt-2 d-flex justify-contain-center">
+                            <button type="submit" class="btn btn-primary w-100"> 
+                                Pay ${{ "$%.2f" | format(total)}}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -65,43 +66,49 @@ Payment
                     Credit Card
                 </button>
             </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionPayment">
                 <div class="accordion-body">
                     <form class="row" action="{{ url_for('payment.card_payment', order_id=order_id) }}" method="POST">
                         <input type="hidden" name="payment_type" value="credit_card">
                         <div class="form-group">
-                            <label for="card_type">Card Type</label>
-                            <select name="card_type" id="card_type" required>
+                            <label for="card_type" class="form-label">Card Type</label>
+                            <select class="form-select" name="card_type" id="card_type" required>
                                 <option value="" disabled selected>Select Card Type...</option>
                                 {% for card_type in card_types %}
                                     <option value="{{ card_type }}">{{ card_type }}</option>
                                 {% endfor %}
                             </select>
                         </div>                          
-						<div class="form-group">
+						<div class="form-group mt-2">
                             <label for="card_no" class="form-label">Card Number</label> 
-                            <input type="text" name="card_no" placeholder="1234 5678 9012 3457" id="card_no" minlength="19" maxlength="19" pattern="[\d ]{19}" required>
+                            <input class="form-control" type="text" name="card_no" placeholder="1234 5678 9012 3457" id="card_no" minlength="19" maxlength="19" pattern="[\d ]{19}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-2">
                             <label for="name" class="form-label">Name</label> 
-                            <input type="text" id="name" name="name" placeholder="Name" size="17" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name on Card" pattern="[A-Za-z ]{2,26}" size="26" required>
                             <small class="text-body-secondary">Full name as displayed on card</small>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-2">
                         	<div class="row">
                         		<div class="col-sm-6">
-                                    <label for="expiry" class="form-label">Expiry</p>
-                        			<input type="text" name="expiry" placeholder="MM/YY" size="5" id="expiry" minlength="5" maxlength="5" pattern="[0-9\/]{5}" required>
-                        		</div>
+                                    <div class="col-auto">
+                                    <label for="expiry" class="form-label">Expiry</label>
+                                    </div>
+                                    <div class="col-auto">
+                                    <input type="text" class="form-control" name="expiry" placeholder="MM/YY" size="5" id="expiry" minlength="5" maxlength="5" pattern="[0-9\/]{5}" required>
+                                    </div>   
+                                </div>
                         		<div class="col-sm-6">
-                                    <label for="cvv" class="form-label">CVV</p>
-                        			<input type="password" name="cvv" id="cvv" placeholder="&#9679;&#9679;&#9679;" size="3" minlength="3" maxlength="3" pattern="[0-9]{3}" required>
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="password" class="form-control" name="cvv" id="cvv" placeholder="&#9679;&#9679;&#9679;" size="3" minlength="3" maxlength="3" pattern="[0-9]{3}" required>
                         		</div>                        		
                         	</div>
                         </div>
-                        <div class="row">
-                            <button type="submit" class="btn btn-primary w-100"> Pay ${{ "$%.2f" | format(total)}}</button>
-                        </div>		
+                        <div class="mt-2 d-flex justify-contain-center">
+                            <button type="submit" class="btn btn-primary w-100"> 
+                                Pay ${{ "$%.2f" | format(total)}}
+                            </button>
+                        </div>	
 					</form>
                 </div>
             </div>

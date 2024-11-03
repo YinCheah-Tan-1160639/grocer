@@ -11,17 +11,17 @@ Customers
         <div class="d-flex">
             <div class="me-2">
                 <!-- Search Form -->
-                <!-- <form action=""method="get">
+                <form action=""method="get">
                     <div class="input-group mb-3">
-                        <input class="form-control" name="search_query" placeholder="Email" type="text"
-                               value="">
+                        <input class="form-control" name="search_term" placeholder="First name" type="text" 
+                            value="{{ request.args.get('search_term', '') }}">
                         <div class="input-group-prepend">
-                            <button class="btn btn-warning" type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 <i class="bi bi-search"></i> Search
                             </button>
                         </div>
                     </div>
-                </form> -->
+                </form>
             </div>
         </div>
     </div>
