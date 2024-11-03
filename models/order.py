@@ -22,7 +22,7 @@ class Order(db.Model):
     # Define relationships
     customer = db.relationship('Customer', back_populates='orders')
     orderlines = db.relationship('OrderLine', back_populates='order')
-    payment = db.relationship('Payment', back_populates='order')
+    payment = db.relationship('Payment', back_populates='order', uselist=False)
 
     def is_fulfilled(self) -> bool:
         """! Check if the order is fulfilled."""        
@@ -103,11 +103,17 @@ class Order(db.Model):
 
     def has_payment(self) -> bool:
         """! Check if the order has payment."""
-        return len(self.payment) > 0
+        return self.payment is not None
+    
+    def payment_type(self) -> str:
+        """! Get the payment type of the order."""
+        if self.is_charge_to_account:
+            return "Charge to Account"
+        return self.payment.payment_method() if self.has_payment() else None
 
     def cancel_order(self) -> None:
         """! Update the status of the order to cancelled."""
-        if self.status == 'Cancelled':
+        if self.status == "Cancelled":
             raise ValueError("Order is already cancelled")
         if self.is_fulfilled():
             raise ValueError("Order cannot be cancelled")

@@ -17,3 +17,7 @@ class CreditCard(Payment):
     __mapper_args__ = {
         'polymorphic_identity': 'cc_payment',
     }
+
+    def payment_method(self) -> str:
+        """! Get the payment method."""
+        return "Credit Card"
