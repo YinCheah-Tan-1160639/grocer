@@ -1,14 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <div class="container-fluid">        
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid ms-2 me-2">        
         <a class="navbar-brand" href="{{ url_for('store.index') }}">
-            <strong>
-                Fresh Harvest Grocer
-            </strong>
+            <h3><strong>Fresh Harvest Grocer</strong></h3>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav">                    
                 {% if role %}
                 <li class="nav-item">
@@ -63,11 +61,15 @@
                     <a class="nav-link text-white" href="{{ url_for('staff.list_customers') }}">
                         Customers
                     </a>
-                </li>                
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="">
-                        Report
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="{{ url_for('staff.profile') }}" id="reportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Reports
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="reportDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('report.sales_report') }}">Sales Report</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('report.most_popular_item') }}">Most Popular Item</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('staff.profile') }}">

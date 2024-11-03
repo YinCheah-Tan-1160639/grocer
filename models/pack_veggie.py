@@ -37,6 +37,13 @@ class PackVeggie(Vegetable):
         """
         return f"{self.no_of_pack} pack" if self.no_of_pack == 1 else f"{self.no_of_pack} packs"
     
+    def get_quantity(self) -> Decimal:
+        """! Get the quantity of the pack veggie ordered.
+        
+        @return The weight of the item line.
+        """
+        return self.no_of_pack
+    
     def subtotal_display(self) -> str:
         """! Return the subtotal display of the vegetable. Example: $30.00.
         

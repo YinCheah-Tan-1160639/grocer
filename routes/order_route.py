@@ -198,7 +198,7 @@ def check_out(order_id):
     total_amount = order.calculate_final_total()
     banks = DebitCard.VALID_BANKS
     card_types = CreditCard.VALID_CARD_TYPES
-    return render_template("customer/checkout.html", 
+    return render_template("customer/payment.html", 
                            role=session['role'], 
                            order_id=order_id, 
                            total=total_amount,
@@ -256,6 +256,7 @@ def cancel_order(order_id):
     @return Redirect to the order view.
     """
     order = Order.query.get_or_404(order_id)
+    print(order.status)
     if not order:
         flash("Order not found.", "error")
         return redirect(url_for('order.list_orders'))
@@ -268,7 +269,9 @@ def cancel_order(order_id):
         flash("Order has been successfully cancelled.", "success")
     except ValueError as e:
         flash(str(e), "error")
-    return redirect(url_for('order.view_order', order_id=order_id))
+    except Exception as e:
+        flash(str(e), "error")
+    return redirect(url_for('order.view_order', order_id=order.id))
 
     # def create_vegetable_item(name, price, qty, unit, premadebox_id=None):
     # if unit == 'kg':

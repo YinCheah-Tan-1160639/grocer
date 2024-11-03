@@ -44,6 +44,13 @@ class PremadeBox(Item):
         """
         return f"{self.no_of_boxes} box" if self.no_of_boxes == 1 else f"{self.no_of_boxes} boxes"
     
+    def get_quantity(self) -> Decimal:
+        """! Get the quantity of the premade box ordered.
+        
+        @return The number of boxes as a Decimal.
+        """
+        return self.no_of_boxes
+    
     def subtotal_display(self) -> str:
         """! Return the subtotal display of the premade box. Example: $30.00.
         

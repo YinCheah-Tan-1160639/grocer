@@ -6,6 +6,7 @@ from models import PremadeBoxProduct
 from models import VegetableProduct
 from models import Order
 from models import CorporateCustomer
+from models import db
 
 staff_bp = Blueprint('staff', __name__, url_prefix='/staff')
 
@@ -104,21 +105,22 @@ def view_order(order_id):
                             user_id=session['user_id']
                             )
 
-@staff_bp.route("/<int:order_id>/update")
+@staff_bp.route("/<int:order_id>/update", methods=["POST"])
 @role_required("staff")
 def update_order(order_id): 
     """This route allows the staff to update the status of an order."""   
-    pass
-
-@staff_bp.route("/popular_item")
-@role_required("staff")
-def popular_item(): 
-    """This route allows the staff to view the most popular item."""   
-    pass
-
-@staff_bp.route("/report")
-@role_required("staff")
-def report(): 
-    """This route allows the staff to view sales report and generate list."""   
-    pass
-
+    order = Order.query.get_or_404(order_id)
+    if not order:
+        flash("Order not found.", "error")
+        return redirect(url_for('staff.list_orders'))
+    if request.form.get("status"):
+        status = request.form.get("status")
+        try:
+            order.update_status(status)
+            db.session.commit()
+            flash("Order status updated.", "success")
+        except ValueError as e:
+            flash(str(e), "error")
+        return redirect(url_for('staff.view_order', order_id=order_id))
+    flash("Invalid status.", "error")
+    return redirect(url_for('staff.list_orders'))

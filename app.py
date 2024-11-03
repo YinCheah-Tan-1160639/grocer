@@ -1,18 +1,19 @@
 from flask import Flask
 from database import db
 from hashing import hashing
-from sqlalchemy import create_engine
 from connect import DB_USER, DB_PASS, DB_NAME, DB_HOST, DB_PORT
 from seed import insert_test_data
 
+
 def register_blueprints(app):
     # Import blueprints and register them
-    from routes import store_bp, staff_bp, customer_bp, order_bp, payment_bp
+    from routes import store_bp, staff_bp, customer_bp, order_bp, payment_bp, report_bp
     app.register_blueprint(store_bp)
     app.register_blueprint(staff_bp)
     app.register_blueprint(customer_bp)
     app.register_blueprint(order_bp)
     app.register_blueprint(payment_bp)
+    app.register_blueprint(report_bp)
 
 
 def create_app():
@@ -33,9 +34,9 @@ def create_app():
     hashing.init_app(app)
 
     with app.app_context():
-        db.drop_all()
-        db.create_all()
-        insert_test_data()
+        db.drop_all() # Uncomment this line to drop all tables
+        db.create_all() # This line is used to create all tables, uncomment it when you already have the tables
+        insert_test_data() # Insert test data, uncomment this line when you already have the tables and data
 
     # Register blueprints
     register_blueprints(app)

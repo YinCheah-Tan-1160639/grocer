@@ -37,6 +37,13 @@ class UnitPriceVeggie(Vegetable):
         """
         return f"{self.quantity} unit" if self.quantity == 1 else f"{self.quantity} units"
     
+    def get_quantity(self) -> Decimal:
+        """! Get the quantity of the weighted veggie ordered.
+        
+        @return The weight of the item line.
+        """
+        return self.quantity
+    
     def subtotal_display(self) -> str:
         """! Return the subtotal display of the vegetable. Example: $30.00.
         

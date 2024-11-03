@@ -36,6 +36,13 @@ class WeightedVeggie(Vegetable):
         @return A string representing the quantity of the item line.
         """
         return f"{self.weight} kg"
+    
+    def get_quantity(self) -> Decimal:
+        """! Get the quantity of the weighted veggie ordered.
+        
+        @return The weight of the item line.
+        """
+        return self.weight
 
     def calculate_subtotal(self) -> Decimal:
         """! Calculate subtotal for the weighted veggie ordered.

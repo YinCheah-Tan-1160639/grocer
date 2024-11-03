@@ -58,6 +58,8 @@ class Customer(Person):
 
     def refund(self, amount: Decimal) -> None:
         """! Method to refund the customer."""
+        if amount < 0:
+            raise ValueError("Refund amount cannot be negative")
         self.balance -= amount
     
     def details(self) -> str:

@@ -1,5 +1,5 @@
 from database import db
-
+from datetime import datetime
 from models import Staff
 from models import Customer
 from models import CorporateCustomer
@@ -97,7 +97,7 @@ def insert_test_data():
         username='cust_1', 
         password='1234', 
         address='1234 Main St',
-        balance=14.98
+        balance=29.83
     ))
     
     customers.append(Customer(
@@ -107,7 +107,8 @@ def insert_test_data():
         email="cust.two@example.com",
         username='cust_2', 
         password='1234', 
-        address='1234 Main St'
+        address='1234 Main St',
+        balance=49.90
     ))
 
     customers.append(Customer(
@@ -228,33 +229,59 @@ def insert_test_data():
     db.session.commit()
 
     orders.append(Order( # order 1
+        date=datetime(2024, 9, 13, 12, 30), 
         customer_id=4,
         is_delivery=False,
         is_charge_to_account=False,
-        status='Confirmed'))
+        status='Completed'))
     
     orders.append(Order( # order 2
+        date=datetime(2024, 9, 20, 12, 30),
         customer_id=4,
         is_delivery=False,
         is_charge_to_account=True,
         status='Ready for Pickup'))
     
     orders.append(Order( # order 3
+        date=datetime(2024, 9, 30, 10, 30),
         customer_id=4,
         is_delivery=True,
         is_charge_to_account=False,
         status='Confirmed'))
     
     orders.append(Order( # order 4
+        date=datetime(2024, 10, 15, 12, 30),
         customer_id=4,
         is_delivery=False,
         is_charge_to_account=True,
         status='Cancelled'))
     
     orders.append(Order( # order 5
+        date=datetime(2024, 10, 20, 12, 30),
         customer_id=9,
         is_delivery=False,
         is_charge_to_account=False,
+        status='Ready for Pickup'))
+    
+    orders.append(Order( # order 6
+        date=datetime(2024, 10, 20, 10, 30),
+        customer_id=5,
+        is_delivery=False,
+        is_charge_to_account=True,
+        status='Confirmed'))
+    
+    orders.append(Order( # order 7
+        date=datetime(2024, 10, 30, 12, 30),
+        customer_id=4,
+        is_delivery=False,
+        is_charge_to_account=False,
+        status='Pending'))
+    
+    orders.append(Order( # order 8
+        date=datetime(2024, 11, 1, 12, 30),
+        customer_id=4,
+        is_delivery=False,
+        is_charge_to_account=True,
         status='Ready for Pickup'))
     
     db.session.add_all(orders)
@@ -283,22 +310,81 @@ def insert_test_data():
         no_of_boxes = 1
     ))
 
-    items.append(UnitPriceVeggie( # item 5
+    items.append(WeightedVeggie( # item 5/box 1
+        name='Potatoes',
+        price = 1.89,
+        weight = 2.0,
+        premadebox_id=4
+    ))
+
+    items.append(UnitPriceVeggie( # item 6/box 1
+        name='Cucumber',
+        price = 3.99,
+        quantity = 1,
+        premadebox_id=4
+    ))
+
+    items.append(WeightedVeggie( # item 7/box 1
+        name='Tomatoes',
+        price = 4.99,
+        weight = 1.0,
+        premadebox_id=4
+    ))
+
+    items.append(PackVeggie( # item 8/box 1
+        name='Baby Spinach (130g)',
+        price = 3.99,
+        no_of_pack = 1,
+        premadebox_id=4
+    ))
+
+    items.append(UnitPriceVeggie( # item 9/box 1
+        name='Cauliflower',
+        price = 3.99,
+        quantity = 1,
+        premadebox_id=4
+    ))
+
+    items.append(UnitPriceVeggie( # item 10
         name='Cabbage',
         price = 2.89,
         quantity = 1
     ))
 
-    items.append(PackVeggie( # item 6
+    items.append(PackVeggie( # item 11
         name='Baby Spinach (130g)',
         price = 3.99,
         no_of_pack = 10
     ))
 
-    items.append(WeightedVeggie( # item 7
+    items.append(WeightedVeggie( # item 12
         name='Onions',
         price = 0.99,
         weight = 5.0
+    ))
+
+    items.append(WeightedVeggie( # item 13
+        name='Kumaras',
+        price = 5.99,
+        weight = 5.0
+    ))
+
+    items.append(UnitPriceVeggie( # item 14
+        name='Cucumber',
+        price = 3.99,
+        quantity = 5
+    ))
+
+    items.append(WeightedVeggie( # item 15
+        name='Garlics',
+        price = 41.99,
+        weight = 5.0
+    ))
+
+    items.append(WeightedVeggie( # item 16
+        name='Onions',
+        price = 0.99,
+        weight = 15.0
     ))
 
     db.session.add_all(items)
@@ -321,15 +407,31 @@ def insert_test_data():
     
     orderlines.append(OrderLine(
         order_id=4,
-        item_id=5))
+        item_id=10))
     
     orderlines.append(OrderLine(
         order_id=5,
-        item_id=6))
+        item_id=11))
     
     orderlines.append(OrderLine(
         order_id=5,
-        item_id=7))
+        item_id=12))
+    
+    orderlines.append(OrderLine(
+        order_id=6,
+        item_id=13))
+    
+    orderlines.append(OrderLine(
+        order_id=6,
+        item_id=14))
+    
+    orderlines.append(OrderLine(
+        order_id=7,
+        item_id=15))
+    
+    orderlines.append(OrderLine(
+        order_id=8,
+        item_id=16))
     
     db.session.add_all(orderlines)
     

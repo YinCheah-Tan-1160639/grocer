@@ -16,7 +16,7 @@ class Person(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)    
     username = db.Column(db.String(30), unique=True, nullable=False)
     _password = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
     type = db.Column(db.String(50)) # Discriminator attribute: 'staff', 'customer'
     
     __mapper_args__ = {

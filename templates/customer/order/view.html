@@ -5,8 +5,6 @@ Orders
 {% endblock %}
 
 {% block content %}
-{% if order.customer_id == user_id %}
-
 <div class="row">
     <div class="col-sm-12 mx-auto">
         <!-- Order details -->
@@ -91,14 +89,21 @@ Orders
                     </tbody>
                 </table>
             </div>
-        </div>                        
+        </div>
+        {% if role in ('customer', 'corporate_customer') %}                        
         <div class="d-flex justify-content-start mt-2 mb-3">
             <a href="{{url_for('order.list_orders')}}" class="link-back">
                 <i class="bi bi-arrow-left"></i> Back to Order List
             </a>
         </div>
+        {% endif %}
+        {% if role == 'staff' %}
+        <div class="d-flex justify-content-start mt-2 mb-3">
+            <a href="{{url_for('staff.list_orders')}}" class="link-back">
+                <i class="bi bi-arrow-left"></i> Back to Order List
+            </a>
+        </div>
+        {% endif %}
     </div>
 </div>
-
-{% endif %}
 {% endblock %}

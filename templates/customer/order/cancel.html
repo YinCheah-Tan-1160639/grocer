@@ -1,8 +1,25 @@
-{% extends 'base.html' %}
+<!-- Button trigger modal to update order status-->
+<button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#cancel{{order.id}}">
+    Cancel
+</button>
 
-{% block title %}
-Orders
-{% endblock %}
-
-{% block content %}
-{% endblock %}
+<!-- Modal -->
+<div class="modal fade" id="cancel{{order.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cancelLabel{{order.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="cancelLabel{{order.id}}">Cancel Order</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Are you sure you want to cancel this order? </p>
+                <form action="{{ url_for('order.cancel_order', order_id=order.id) }}" method="POST">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-create"></i> Cancel Order
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

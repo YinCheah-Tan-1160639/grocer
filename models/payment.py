@@ -9,7 +9,7 @@ class Payment(db.Model):
     __tablename__ = 'payment'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    date = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
     amount = db.Column(db.Numeric(10, 2), nullable=False)    
     customer_id = db.Column(db.Integer, db.ForeignKey("customer.id"))
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=True)

@@ -13,7 +13,7 @@ class Order(db.Model):
     DELIVERY_FEE = 10 # Delivery fee
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    date = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
     is_delivery = db.Column(db.Boolean, nullable=False, default=False)
     is_charge_to_account = db.Column(db.Boolean, nullable=False, default=False)
     status = db.Column(db.String(30), nullable=False, default='Pending')
@@ -100,16 +100,10 @@ class Order(db.Model):
             if isinstance (self.customer, CorporateCustomer):
                 raise ValueError("Order exceeds credit limit.")
             raise ValueError("Order exceeds maximum owing limit.")
-        
-    # def get_line_items(self) -> list:
-    #     """! Get the line items of the order.
 
-    #     @return A list of line items of the order.
-    #     """
-    #     return [{
-    #         "name": orderline.item.name else f"{orderline.item.size} Premade Box",
-    #         "quantity": orderline.item.quantity ,
-    #         } for orderline in self.orderlines]
+    def has_payment(self) -> bool:
+        """! Check if the order has payment."""
+        return len(self.payment) > 0
 
     def cancel_order(self) -> None:
         """! Update the status of the order to cancelled."""
@@ -117,15 +111,16 @@ class Order(db.Model):
             raise ValueError("Order is already cancelled")
         if self.is_fulfilled():
             raise ValueError("Order cannot be cancelled")
+        
+        # Refund the customer if there is payment/ charge to account
         if self.has_payment():
+            print(self.payment)
             self.customer.refund(self.calculate_final_total())
         elif self.is_charge_to_account:
             self.customer.refund(self.calculate_final_total())
+            self.is_charge_to_account = False
+
         self.status = 'Cancelled'
-            
-    def has_payment(self) -> bool:
-        """! Check if the order has payment."""
-        return self.payment is not None
     
     def can_be_processed(self) -> bool:
         """! Check if the order can be processed."""
@@ -142,8 +137,8 @@ class Order(db.Model):
             raise ValueError("Invalid status")
         if new_status in self.status:
             raise ValueError("Order is already in this status")       
-        if not self.can_be_processed():
-            raise ValueError("Order has not been confirmed")
+        # if not self.can_be_processed():
+        #     raise ValueError("Order has not been confirmed")
         if self.is_delivery and new_status == 'Ready for Pickup':
             raise ValueError("This is a delivery order")
         if new_status == 'Shipped' and not self.is_delivery:
