@@ -15,7 +15,7 @@ from models import VegetableProduct
 from models import PremadeBoxProduct
 from models import BoxComponent
 
-password = hashing.hash_value('123456789Ab', salt='abcd')
+password = hashing.hash_value('Test123456', salt='abcd')
 
 # Load and parse a text file to create product objects
 def load_products(txt_file):
