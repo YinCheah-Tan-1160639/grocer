@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid ms-2 me-2">        
+    <div class="container-fluid ms-2 me-2">
+        <!-- Homepage -->
         <a class="navbar-brand" href="{{ url_for('store.index') }}">
             <h3><strong>Fresh Harvest Grocer</strong></h3>
         </a>
@@ -7,13 +8,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav">                    
+            <ul class="navbar-nav">
+                <!-- Show the links on navbar if role in session -->
                 {% if role %}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('store.dashboard') }}">
                         Dashboard
                     </a>
-                </li>                
+                </li>    
+                <!-- customer navbar links  -->
                 {% if role in ('customer', 'corporate_customer') %}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('customer.list_veggies') }}">
@@ -41,6 +44,7 @@
                     </a>
                 </li>
                 {% endif %}
+                <!-- staff navbar links  -->
                 {% if role == 'staff' %}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('staff.list_orders') }}">
@@ -76,13 +80,15 @@
                         Profile
                     </a>
                 </li>
-                {% endif %}                                
+                {% endif %}
+                <!-- logout link (only for login user) -->                                
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('store.logout') }}">
                         <i class="bi bi-box-arrow-right me-2"></i>Logout
                     </a>
                 </li>
                 {% else %}
+                <!-- login link (when no user in session) -->
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('store.login') }}">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Login

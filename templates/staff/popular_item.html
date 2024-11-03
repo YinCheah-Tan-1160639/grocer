@@ -5,51 +5,56 @@ Most Popular Item
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid mt-2 p-2">
+<div class="container p-2">
     <!-- Only show if role is staff -->
     {% if role == "staff" %}
-    <div class="row mb-2">
-        <div class="card p-2">
-            <div class="card-body">
-                <h1>Most Popular Item</h1>
-                <p></p>
-                <form method="POST" action="{{ url_for('report.most_popular_item') }}">
-                    <div class="row g-3 align-items-center d-flex">
-                        <div class="col-auto">                    
-                            <label for="start_date" class="form-label me-2">Start Date:</label>
+    <div class="row mt-4 mb-2">
+        <div class="col-lg-8 mx-auto">
+            <div class="card p-2">
+                <div class="card-body">
+                    <h3>Most Popular Item</h3>
+                    <p></p>
+                    <form method="POST" action="{{ url_for('report.most_popular_item') }}">
+                        <div class="row g-3 align-items-center d-flex">
+                            <div class="col-auto">                    
+                                <label for="start_date" class="form-label me-2">Start Date:</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="date" id="start_date" name="start_date" class="form-control" max="{{ max_date }}" required>
+                            </div>
+                            <div class="col-auto">
+                                <label for="end_date" class="form-label ms-2 me-2">End Date:</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="date" id="end_date" name="end_date" class="form-control"  max="{{ max_date }}" required>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <input type="date" id="start_date" name="start_date" class="form-control" max="{{ max_date }}" required>
-                        </div>
-                        <div class="col-auto">
-                            <label for="end_date" class="form-label ms-2 me-2">End Date:</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="date" id="end_date" name="end_date" class="form-control"  max="{{ max_date }}" required>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     {% if start_date and end_date %}
     <div class="row">
-        <div class="card p-2">
-            <div class="card-body">                
-                <h5><strong>Most Popular Item</strong></h5>
-                <p>From: {{ start_date }}</p>
-                <p>To: {{ end_date }}</p>
-                {% if item %}
-                <p>Item: {{ item.name }}</p>
-                <p>Total Quantity sold: {{ item.total_quantity }}</p>
-                {% else %}
-                <p>No sales recorded for the selected period.</p>
-                {% endif %}
+        <div class="col-lg-8 mx-auto">
+            <div class="card p-2">
+                <div class="card-body">                
+                    <h5><strong>Most Popular Item</strong></h5>
+                    <hr>
+                    <p class="mt-4">From: {{ start_date }}</p>
+                    <p>To: {{ end_date }}</p>
+                    {% if item %}
+                    <p>Item: {{ item.name }}</p>
+                    <p>Total Quantity sold: {{ item.total_quantity }}</p>
+                    {% else %}
+                    <p>No sales recorded for the selected period.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

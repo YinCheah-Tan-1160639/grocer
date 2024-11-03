@@ -5,31 +5,36 @@ Premade Boxes
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <!-- Title -->
-    <div class="d-flex justify-content-between">
-        <h2 class="mb-4 ms-2">
-            Premade Boxes
-        </h2>
-    </div>
-    
-    <!-- Display all Premade Boxes-->
-    {% for box in boxes %}
-    <div class="card mb-3">
-        <div class="row g-0">
-            <h5 class="card-header">{{ box.size | title }} Box - {{ "$%.2f" | format(box.price) }}</h5>
-            <div class="card-body">
-                {% if role == "staff" %}
-                <h5 class="card-title">Available: {{ "Yes" if box.available else "No"}}</h5>
-                {% endif %}
-                <ol class="list-group list-group-numbered">
-                    {% for item in box.components %}
-                        <li class="list-group-item">{{ item.vegetable.name }} - {{ item.quantity }} {{ item.vegetable.unit }}</li>
-                    {% endfor %}
-                </ol>
+<div class="container p-2">
+    <!-- Display all Premade Boxes-->   
+    <div class="row">
+        <div class="col-lg-8 mx-auto p-2">
+            <!-- Title -->
+            <div class="d-flex justify-content-between mb-2 me-4">
+                <h3>
+                    Premade Boxes
+                </h3>
             </div>
+            {% for box in boxes %}
+            <div class="card mb-2">
+                <h5 class="card-header bg-primary text-white">
+                    {{ box.size | title }} Box - {{ "$%.2f" | format(box.price) }}
+                </h5>
+                <div class="card-body">
+                    {% if role == "staff" %}
+                    <h6 class="card-title">
+                        Available: {{ "Yes" if box.available else "No"}}
+                    </h6>
+                    {% endif %}
+                    <ol class="list-group list-group-numbered">
+                        {% for item in box.components %}
+                            <li class="list-group-item">{{ item.vegetable.name }} - {{ item.quantity }} {{ item.vegetable.unit }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>	
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
 </div>
 {% endblock %}

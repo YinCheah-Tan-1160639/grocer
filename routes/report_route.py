@@ -131,10 +131,10 @@ def sales_report():
             start_date = end_date - timedelta(days=6)
         elif type == 'Monthly':
             end_date = datetime.today()
-            start_date = end_date.replace(day=1)  # First day of the current month
+            start_date = end_date - timedelta(days=30) 
         elif type == 'Yearly':
             end_date = datetime.today()
-            start_date = end_date.replace(month=1, day=1)  # First day of the year
+            start_date = end_date - timedelta(days=365) 
         else:
             flash("Invalid report type", "error")
             return redirect(url_for('report.sales_report'))

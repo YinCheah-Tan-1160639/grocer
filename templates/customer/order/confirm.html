@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Orders
+Order Summary
 {% endblock %}
 
 {% block content %}
 {% if order.customer_id == user_id %}
-<div>
-    <h5>Order Summary</h5>
+<div class="container p-2">
+    <h3>Order Summary</h3>
     <div class="table-responsive ms-4 me-4 mb-4">
         <table class="table table-hover table-sm">
             <thead>

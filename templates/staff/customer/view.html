@@ -5,15 +5,15 @@ Customer Details
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid p-2">
+<div class="container p-2">
     <!-- back to customer list -->
-    <div class="d-flex mb-4 justify-content-start ms-6">
-        <a href="{{ url_for('staff.list_customers')}}" class="link-back">
-            <i class="bi bi-arrow-left"></i> Back to Customer List 
-        </a>
-    </div>
     <div class="row">
-        <div class="col-lg-10 mx-auto">
+        <div class="col-lg-8 mx-auto">
+            <div class="d-flex mb-4 justify-content-start ms-6">
+            <a href="{{ url_for('staff.list_customers')}}" class="link-back link-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Customer List 
+            </a>
+        </div>
             <!-- Customer Details Card -->
             <div class="card border-0">
                 <div class="card-header bg-primary text-white">

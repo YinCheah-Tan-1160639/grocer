@@ -5,9 +5,10 @@ Vegetables
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid p-2">
+<div class="container p-2">
     <div class="d-flex justify-content-between mt-2 mb-3 me-4">
-        <h3>Vegetable List</h3>
+        <h3 class="ms-2">Vegetable List</h3>
+        <!-- Show filter if role is staff -->
         {%if role == "staff"%}
         <div class="d-flex">
             <div class="me-2">

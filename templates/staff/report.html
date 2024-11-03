@@ -5,53 +5,58 @@ Sales Report
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid mt-2 p-2">
+<div class="container p-2">
     <!-- Display if user is logged in -->
     {% if role == "staff" %}
-    <div class="row mb-2">
-        <div class="card p-2">
-            <div class="card-body">
-                <h1>Sales Report</h1>
-                <p></p>
-                <form method="POST" action="{{ url_for('report.sales_report') }}">
-                    <div class="row g-3 align-items-center d-flex">
-                        <div class="col-auto">                    
-                            <label for="report_type" class="form-label me-2">Select Report Type:</label>
+    <div class="row mt-4 mb-2">
+        <div class="col-lg-8 mx-auto">
+            <div class="card p-2">
+                <div class="card-body">
+                    <h3>Sales Report</h3>
+                    <p></p>
+                    <form method="POST" action="{{ url_for('report.sales_report') }}">
+                        <div class="row g-3 align-items-center d-flex">
+                            <div class="col-auto">                    
+                                <label for="report_type" class="form-label me-2">Select Report Type:</label>
+                            </div>
+                            <div class="col-auto">
+                                <select name="report_type" id="report_type" class="form-select me-2" required>
+                                    <option value="" disabled selected>Select ...</option>
+                                    {% for type in report_types %}
+                                        <option value="{{ type }}">{{ type}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">
+                                    Generate Report
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <select name="report_type" id="report_type" class="form-select me-2" required>
-                                <option value="" disabled selected>Select ...</option>
-                                {% for type in report_types %}
-                                    <option value="{{ type }}">{{ type}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">
-                                Generate Report
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     {% if type %}
     <div class="row">
-        <div class="card p-2">
-            <div class="card-body">                
-                <h5><strong>{{ type }} Sales Report</strong></h5>
-                <p>From: {{ start_date }}</p>
-                <p>To: {{ end_date }}</p>
-                {% if order_count > 0 and total_sales > 0 %}
-                <p>Total Sales: {{ "$ %.2f"|format(total_sales) }}</p>
-                <p>Number of Orders: {{ order_count }}</p>
-                <p>Number of Delivery Orders: {{ delivery_order }}</p>
-                <p>Number of Pick up Orders: {{ pickup_order }}</p>
-                <button class="btn btn-primary" onclick="window.print();">Print Report</button>
-                {% else %}
-                <p>No sales recorded for the selected period.</p>
-                {% endif %}
+        <div class="col-lg-8 mx-auto">
+            <div class="card p-2">
+                <div class="card-body">                
+                    <h5><strong>{{ type }} Sales Report</strong></h5>
+                    <hr>
+                    <p>From: {{ start_date }}</p>
+                    <p>To: {{ end_date }}</p>
+                    {% if order_count > 0 and total_sales > 0 %}
+                    <p>Total Sales: {{ "$ %.2f"|format(total_sales) }}</p>
+                    <p>Number of Orders: {{ order_count }}</p>
+                    <p>Number of Delivery Orders: {{ delivery_order }}</p>
+                    <p>Number of Pick up Orders: {{ pickup_order }}</p>
+                    <button class="btn btn-primary" onclick="window.print();">Print Report</button>
+                    {% else %}
+                    <p>No sales recorded for the selected period.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
