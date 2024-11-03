@@ -21,13 +21,21 @@ def profile():
 
 @staff_bp.route("/list_customers")
 @role_required("staff")
-def list_customers():    
-    customers = Customer.query.all()  
-    if not customers:
-        flash("No customers found.", "warning")
+def list_customers():
+    search_term = request.args.get("search_term", None)
+    if search_term is not None:
+        customers = Customer.query.filter(
+            Customer.first_name.ilike(f"%{search_term}%")).all()
+        if not customers:
+            flash("No customers found.", "warning") 
+    else:
+        customers = Customer.query.all()  
+        if not customers:
+            flash("No customers found.", "warning")
     return render_template("staff/customer/list.html", 
                         customers=customers, 
-                        role=session['role']
+                        role=session['role'],
+                        search_term=search_term
                         )
 
 @staff_bp.route("/view_customer/<int:customer_id>")
@@ -79,11 +87,22 @@ def list_premade_boxes():
 @staff_bp.route("/list_orders")
 @role_required("staff")
 def list_orders():
-    """This route allows the staff to view a list of orders."""    
-    orders = Order.query.filter(Order.status != "Pending").order_by(Order.date.desc()).all()
-    if not orders:
-        flash("No orders found.", "error")
-    return render_template("customer/order/list.html", orders=orders, role=session['role'])  
+    """This route allows the staff to view a list of orders."""
+    status_list = Order.STATUS
+    status = request.args.get("status", None)
+    if status is not None and status in status_list:
+        orders = Order.query.filter_by(status=status).order_by(Order.date.desc()).all()
+        if not orders:
+            flash(f"No {status} orders found.", "warning")
+    else:
+        orders = Order.query.filter(Order.status != "Pending").order_by(Order.date.desc()).all()
+        if not orders:
+            flash("No current orders found.", "error")
+    return render_template("customer/order/list.html", 
+                           orders=orders, 
+                           role=session['role'],
+                           status_list=status_list
+                           )  
 
 @staff_bp.route("/order/<int:order_id>/view")
 @role_required("staff")
