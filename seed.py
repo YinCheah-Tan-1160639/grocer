@@ -1,6 +1,7 @@
 from database import db
+from hashing import hashing
 from datetime import datetime
-from models import Staff
+from models import Staff, order
 from models import Customer
 from models import CorporateCustomer
 from models import Order
@@ -9,10 +10,12 @@ from models import PackVeggie
 from models import WeightedVeggie
 from models import UnitPriceVeggie
 from models import CreditCard, DebitCard
-from models.premadebox import PremadeBox
-from models.product import VegetableProduct
-from models.product import PremadeBoxProduct
-from models.product import BoxComponent
+from models import PremadeBox
+from models import VegetableProduct
+from models import PremadeBoxProduct
+from models import BoxComponent
+
+password = hashing.hash_value('123456789Ab', salt='abcd')
 
 # Load and parse a text file to create product objects
 def load_products(txt_file):
@@ -20,7 +23,7 @@ def load_products(txt_file):
         products = []
         for line in file:
             product = line.strip().split(', ')
-            if len(product) != 4:  # Ensure there are exactly 4 fields
+            if len(product) != 4:
                 print(f"Skipping invalid line: {line.strip()}")
                 continue
             
@@ -35,11 +38,11 @@ def load_products(txt_file):
                 continue
 
             products.append(VegetableProduct(name=name, price=price, available=available, unit=unit))
-            db.session.add_all(products)
+        db.session.add_all(products)
         db.session.commit()
 
+# Insert test data into the database
 def insert_test_data():
-    # Create sample data
 
     # Create empty list
     staffs = []
@@ -50,7 +53,6 @@ def insert_test_data():
     items = []
     payments = []
 
-
     # Add staff instances to the list
     staffs.append(Staff(
         first_name='John', 
@@ -58,7 +60,7 @@ def insert_test_data():
         phone='0123456789', 
         email="john.doe@example.com", 
         username='john_doe', 
-        password='1234', 
+        password=password, 
         position='Manager', 
         department='Sales', 
         date_joined='2021-01-01'
@@ -70,7 +72,7 @@ def insert_test_data():
         phone='0123456789', 
         email="staff.two@example.com",
         username='staff_2', 
-        password='1234', 
+        password=password, 
         position='Sales Associate', 
         department='Sales', 
         date_joined='2021-01-01'
@@ -82,7 +84,7 @@ def insert_test_data():
         phone='0123456789', 
         email="staff.three@example.com",
         username='staff_3', 
-        password='1234', 
+        password=password, 
         position='Sales Associate', 
         department='Sales', 
         date_joined='2021-01-01'
@@ -95,7 +97,7 @@ def insert_test_data():
         phone='0123456789', 
         email="cust.one@example.com",
         username='cust_1', 
-        password='1234', 
+        password=password, 
         address='1234 Main St',
         balance=29.83
     ))
@@ -106,7 +108,7 @@ def insert_test_data():
         phone='0123456789', 
         email="cust.two@example.com",
         username='cust_2', 
-        password='1234', 
+        password=password, 
         address='1234 Main St',
         balance=49.90
     ))
@@ -117,7 +119,7 @@ def insert_test_data():
         phone='0123456789', 
         email="cust.three@example.com",
         username='cust_3', 
-        password='1234', 
+        password=password, 
         address='1234 Main St'
     ))
 
@@ -127,7 +129,7 @@ def insert_test_data():
         phone='0123456789', 
         email="cust.four@example.com",
         username='cust_4', 
-        password='1234', 
+        password=password, 
         address='1234 Main St'
     ))
 
@@ -137,8 +139,9 @@ def insert_test_data():
         phone='0123456789', 
         email="cust.five@example.com",
         username='cust_5', 
-        password='1234', 
-        address='1234 Main St'
+        password=password, 
+        address='1234 Main St',
+        balance=4.99
     ))
 
     # Corporate Customers
@@ -148,7 +151,7 @@ def insert_test_data():
         phone='0123456789', 
         email="company.one@example.com",
         username='company1', 
-        password='1234', 
+        password=password, 
         address='1234 Main St',
         company_name='Company One'
     ))
@@ -159,7 +162,7 @@ def insert_test_data():
         phone='0123456789', 
         email="company.two@example.com",
         username='company2', 
-        password='1234', 
+        password=password, 
         address='1234 Main St',
         company_name='Company Two'
     ))
@@ -170,7 +173,7 @@ def insert_test_data():
         phone='0123456789', 
         email="company.three@example.com",
         username='company3', 
-        password='1234', 
+        password=password, 
         address='1234 Main St',
         company_name='Company Three'
     ))
@@ -284,6 +287,34 @@ def insert_test_data():
         is_charge_to_account=True,
         status='Ready for Pickup'))
     
+    orders.append(Order( # order 9
+        date=datetime(2024, 10, 15, 12, 30),
+        customer_id=6,
+        is_delivery=True,
+        is_charge_to_account=False,
+        status='Shipped'))
+    
+    orders.append(Order( # order 10
+        date=datetime(2024, 10, 20, 12, 30),
+        customer_id=7,
+        is_delivery=False,
+        is_charge_to_account=False,
+        status='Ready for Pickup'))
+    
+    orders.append(Order( # order 11
+        date=datetime(2024, 10, 22, 10, 30),
+        customer_id=8,
+        is_delivery=False,
+        is_charge_to_account=True,
+        status='Confirmed'))
+    
+    orders.append(Order( # order 12
+        date=datetime(2024, 10, 25, 10, 30),
+        customer_id=9,
+        is_delivery=False,
+        is_charge_to_account=False,
+        status='Pending'))
+    
     db.session.add_all(orders)
     
     items.append(WeightedVeggie( # item 1
@@ -387,6 +418,30 @@ def insert_test_data():
         weight = 15.0
     ))
 
+    items.append(WeightedVeggie( # item 17
+        name='Kumaras',
+        price = 5.99,
+        weight = 5.0
+    ))
+
+    items.append(UnitPriceVeggie( # item 18
+        name='Cucumber',
+        price = 3.99,
+        quantity = 5
+    ))
+
+    items.append(WeightedVeggie( # item 19
+        name='Tomatoes',
+        price = 4.99,
+        weight = 1.0
+    ))
+
+    items.append(PackVeggie( # item 20
+        name='Washed Lettuce (250g)',
+        price = 5.99,
+        no_of_pack = 5
+    ))
+
     db.session.add_all(items)
 
     orderlines.append(OrderLine(
@@ -433,6 +488,22 @@ def insert_test_data():
         order_id=8,
         item_id=16))
     
+    orderlines.append(OrderLine(
+        order_id=9,
+        item_id=17))
+    
+    orderlines.append(OrderLine(
+        order_id=10,
+        item_id=18))
+    
+    orderlines.append(OrderLine(
+        order_id=10,
+        item_id=19))
+    
+    orderlines.append(OrderLine(
+        order_id=11,
+        item_id=20))
+    
     db.session.add_all(orderlines)
     
     payments.append(CreditCard(
@@ -457,6 +528,23 @@ def insert_test_data():
         amount=40.37,
         customer_id=9,
         card_type='Mastercard',
+        card_number='1234567890123456',
+        card_expiry='12/25'
+    ))
+
+    payments.append(DebitCard(
+        order_id=9,
+        amount=39.95,
+        customer_id=6,
+        bank_name='Bank B',
+        card_number='1234567890123456'
+    ))
+
+    payments.append(CreditCard(
+        order_id=10,
+        amount=19.95,
+        customer_id=7,
+        card_type='Visa',
         card_number='1234567890123456',
         card_expiry='12/25'
     ))
