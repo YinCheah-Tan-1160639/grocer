@@ -1,5 +1,14 @@
 # Fresh Harvest Grocer Ordering App
 
+This is a software design and development project. The project follows object-oriented programming (OOP) principles and uses MVC (Model, View, Controller) architecture for its structure. 
+
+In this project, I learn to:
+
+1. Design model classes 
+2. Use SQLAlchemy (Object Relational Mapper, ORM) to store the objects to MySQL database. 
+3. Generate program documentation using Doxygen.
+4. Error handling
+
 PythonAnywhere: https://yctan.pythonanywhere.com/
 
 Customer usernames:
