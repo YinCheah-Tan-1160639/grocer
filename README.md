@@ -1,7 +1,7 @@
 # Fresh Harvest Grocer Ordering App - Python Flask Web Application
 
 This is a software design and development project. The project follows object-oriented programming (OOP) principles and uses MVC (Model, View, Controller) architecture for its structure. 
-
+This web application features a login system, order and payment system, order management system and reporting.
 ### **Key Learning outcomes:**
 
 1. Front-end development (HTML, Jinja and Bootstrap CSS). 
