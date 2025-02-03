@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}
 Customer Details
@@ -28,8 +28,8 @@ Customer Details
                         <li class="list-group-item">Email: {{ customer.email }}</li>
                         <li class="list-group-item">Address: {{ customer.address }}</li>
                         <li class="list-group-item">Outstanding Balance: {{ customer.balance }}</li>
-                        <li class="list-group-item">Type: {{ "Corporate" if customer.type == 'corporate_customer' else "Private" }}</li>
-                        {% if customer.type == 'corporate_customer' %}
+                        <li class="list-group-item">Type: {{ "Corporate" if customer.type == "corporate_customer" else "Private" }}</li>
+                        {% if customer.type == "corporate_customer" %}
                         <li class="list-group-item">Company: {{ customer.company_name }}</li>
                         <li class="list-group-item">Credit Limit: {{ customer.credit_limit }}</li>
                         {% endif %}

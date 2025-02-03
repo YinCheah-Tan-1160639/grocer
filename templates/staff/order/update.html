@@ -1,4 +1,5 @@
-<!-- Button trigger modal to update order status-->
+<!-- Template for modal to update order status -->
+<!-- Button trigger modal -->
 <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#update{{order.id}}">
     Update
 </button>
@@ -12,24 +13,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                {% if order.status in ('Cancelled', 'Completed') %}
+                <!-- Display text if cannot be updated -->
+                {% if order.status in ("Cancelled", "Completed") %}
                 <p class="text-center">Order that is completed or cancelled cannot be updated.</p>
-                {% elif order.status == 'Pending' %}
+                {% elif order.status == "Pending" %}
                 <p class="text-center">This order has not been confirmed and paid.</p>
-                {% elif order.status in ('Confirmed', 'Ready for Pickup', 'Shipped') %}
-                <form class="needs-validation" novalidate action="{{ url_for('staff.update_order', order_id=order.id) }}" method="POST">                    
-                    <!-- Status -->                    
+                {% elif order.status in ("Confirmed", "Ready for Pickup", "Shipped") %}
+                <!-- Form to update order status -->
+                <form class="needs-validation" novalidate method="POST" 
+                    action="{{ url_for('staff.update_order', order_id=order.id) }}">                                      
                     <div class="mb-3">
+                        <!-- Dropdown selection -->
                         <label for="status" class="form-label">Status: <span class="text-danger">*</span></label>                        
                         <select class="form-select" id="status" name="status" required>                            
                             <option value="{{ order.status }}" disabled selected>{{ order.status }}</option>
-                            {% if order.status == 'Confirmed' %}
+                            {% if order.status == "Confirmed" %}
                                 {% if order.is_delivery %}
                                 <option value="Shipped"> Shipped </option>
                                 {% elif order.is_delivery != true %}
                                 <option value="Ready for Pickup"> Ready for Pickup </option>
                                 {% endif %}
-                            {% elif order.status in ('Ready for Pickup', 'Shipped') %}            
+                            {% elif order.status in ("Ready for Pickup", "Shipped") %}            
                             <option value="Completed"> Completed </option>
                             {% endif %}
                         </select>
@@ -37,10 +41,14 @@
                             Status is required.
                         </div>                    
                     </div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-create"></i> Update
+                    <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
+                        Close
                     </button>
+                    <button type="submit" class="btn btn-success">
+                        Update
+                    </button>
+                    </div>
                 </form>
                 {% endif %}
             </div>

@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+<!-- Template to display vegetable list -->
+{% extends "base.html" %}
 
 {% block title %}
 Vegetables
@@ -7,6 +8,7 @@ Vegetables
 {% block content %}
 <div class="container p-2">
     <div class="d-flex justify-content-between mt-2 mb-3 me-4">
+        <!-- Title -->
         <h3 class="ms-2">Vegetable List</h3>
         <!-- Show filter if role is staff -->
         {%if role == "staff"%}
@@ -37,6 +39,7 @@ Vegetables
         </div>
         {%endif%}
     </div>
+    <!-- Table for displaying vegetable list -->
     <div class="table-responsive me-4">
         <table class="table table-hover">
             <thead class="table-primary">

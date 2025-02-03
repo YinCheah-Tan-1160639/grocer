@@ -1,8 +1,12 @@
+<!-- Navigation bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid ms-2 me-2">
         <!-- Homepage -->
         <a class="navbar-brand" href="{{ url_for('store.index') }}">
-            <h3><strong>Fresh Harvest Grocer</strong></h3>
+            <h3 style="font-family: 'Ubuntu', serif;
+            font-weight: 700;
+            font-style: italic;">Fresh Harvest Grocer</h3>
+            <!-- <h3 class="ubuntu-regular-italic">Fresh Harvest Grocer</h3> -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -17,7 +21,7 @@
                     </a>
                 </li>    
                 <!-- customer navbar links  -->
-                {% if role in ('customer', 'corporate_customer') %}
+                {% if role in ("customer", "corporate_customer") %}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('customer.list_veggies') }}">
                         Vegetables
@@ -45,7 +49,7 @@
                 </li>
                 {% endif %}
                 <!-- staff navbar links  -->
-                {% if role == 'staff' %}
+                {% if role == "staff" %}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url_for('staff.list_orders') }}">
                         Orders

@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+<!-- Template to display form and most popular item -->
+{% extends "base.html" %}
 
 {% block title %}
 Most Popular Item
@@ -14,6 +15,7 @@ Most Popular Item
                 <div class="card-body">
                     <h3>Most Popular Item</h3>
                     <p></p>
+                    <!-- Form to select date range -->
                     <form method="POST" action="{{ url_for('report.most_popular_item') }}">
                         <div class="row g-3 align-items-center d-flex">
                             <div class="col-auto">                    
@@ -39,6 +41,7 @@ Most Popular Item
             </div>
         </div>
     </div>
+    <!-- Display most popular item -->
     {% if start_date and end_date %}
     <div class="row">
         <div class="col-lg-8 mx-auto">
@@ -59,7 +62,6 @@ Most Popular Item
         </div>
     </div>
     {% endif %}  
-    {% endif %}
-    
+    {% endif %}    
 </div>
 {% endblock %}

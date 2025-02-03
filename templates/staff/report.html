@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+<!-- Template to display form and sales report -->
+{% extends "base.html" %}
 
 {% block title %}
 Sales Report
@@ -6,7 +7,7 @@ Sales Report
 
 {% block content %}
 <div class="container p-2">
-    <!-- Display if user is logged in -->
+    <!-- Display if user role is staff -->
     {% if role == "staff" %}
     <div class="row mt-4 mb-2">
         <div class="col-lg-8 mx-auto">
@@ -14,6 +15,7 @@ Sales Report
                 <div class="card-body">
                     <h3>Sales Report</h3>
                     <p></p>
+                    <!-- Form to select type of report to generate -->
                     <form method="POST" action="{{ url_for('report.sales_report') }}">
                         <div class="row g-3 align-items-center d-flex">
                             <div class="col-auto">                    
@@ -28,6 +30,7 @@ Sales Report
                                 </select>
                             </div>
                             <div class="col-auto">
+                                <!-- Submit button -->
                                 <button type="submit" class="btn btn-primary">
                                     Generate Report
                                 </button>
@@ -38,6 +41,7 @@ Sales Report
             </div>
         </div>
     </div>
+    <!-- Display report -->
     {% if type %}
     <div class="row">
         <div class="col-lg-8 mx-auto">

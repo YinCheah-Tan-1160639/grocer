@@ -1,10 +1,13 @@
-{% extends 'base.html' %}
+<!-- This page shows order summary -->
+
+{% extends "base.html" %}
 
 {% block title %}
 Order Summary
 {% endblock %}
 
 {% block content %}
+<!-- Only show following if the order belongs to the user -->
 {% if order.customer_id == user_id %}
 <div class="container p-2">
     <div class="row">
@@ -14,6 +17,7 @@ Order Summary
                     <h3 class="mb-0">Order Summary</h3>
                 </div>
                 <div class="card-body">
+                    <!-- Table displaying the order lines and items -->
                     <div class="table-responsive ms-4 me-4 mb-4">
                         <table class="table table-hover table-sm">
                             <thead>
@@ -37,24 +41,27 @@ Order Summary
                                     <td class="col text-end">{{ orderline.item.subtotal_display() }}</td>
                                 </tr>
                                 {% endfor %}
-                                    <tr>
-                                        <th scope="row" colspan="3" class="border-0 text-end">
-                                            Discount:
-                                        </th>
-                                        <td class="text-end me-2">
-                                            {{ "%.2f" | format(discount) }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" colspan="3" class="border-0 text-end">
-                                            Total: 
-                                        </th>
-                                        <td class="text-end me-2">
-                                            {{ "$%.2f" | format(total) }}
-                                        </td>
-                                    </tr>
+                                <!-- Display discount and total cost of the order excluding delivery fee -->
+
+                                <tr>
+                                    <th scope="row" colspan="3" class="border-0 text-end">
+                                        Discount:
+                                    </th>
+                                    <td class="text-end me-2">
+                                        {{ "%.2f" | format(discount) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" colspan="3" class="border-0 text-end">
+                                        Total: 
+                                    </th>
+                                    <td class="text-end me-2">
+                                        {{ "$%.2f" | format(total) }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+                        <!-- form for delivery option and proceed to payment -->
                         <div class="mt-2 p-2">
                             <form action="{{ url_for('order.confirm_order', order_id=order.id) }}" method="POST">
                                 <div class="row mt-2">

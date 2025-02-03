@@ -1,3 +1,4 @@
+<!-- Template to display Premade Boxes-->
 {% extends "base.html" %}
 
 {% block title %}
@@ -5,8 +6,7 @@ Premade Boxes
 {% endblock %}
 
 {% block content %}
-<div class="container p-2">
-    <!-- Display all Premade Boxes-->   
+<div class="container p-2">   
     <div class="row">
         <div class="col-lg-8 mx-auto p-2">
             <!-- Title -->
@@ -15,17 +15,20 @@ Premade Boxes
                     Premade Boxes
                 </h3>
             </div>
+            <!-- Card to display each box and content -->
             {% for box in boxes %}
             <div class="card mb-2">
                 <h5 class="card-header bg-primary text-white">
                     {{ box.size | title }} Box - {{ "$%.2f" | format(box.price) }}
                 </h5>
                 <div class="card-body">
+                    <!-- Show availability if role is staff -->
                     {% if role == "staff" %}
                     <h6 class="card-title">
                         Available: {{ "Yes" if box.available else "No"}}
                     </h6>
                     {% endif %}
+                    <!-- List of box content -->
                     <ol class="list-group list-group-numbered">
                         {% for item in box.components %}
                             <li class="list-group-item">{{ item.vegetable.name }} - {{ item.quantity }} {{ item.vegetable.unit }}</li>

@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+<!-- This template is for displaying order list -->
+{% extends "base.html" %}
 
 {% block title %}
 Orders
@@ -7,9 +8,10 @@ Orders
 {% block content %}
 <div class="container p-2">
     <div class="d-flex justify-content-between mt-2 mb-3 me-4">
-        {% if role in ('customer', 'corporate_customer') %}
+        <!-- Display title and filter of the list based on user role -->
+        {% if role in ("customer", "corporate_customer") %}
             <h3>My Orders</h3>
-        {% elif role == 'staff' %}
+        {% elif role == "staff" %}
             <h3>Order List</h3>
             <div class="d-flex">
                 <div class="me-2">
@@ -32,7 +34,7 @@ Orders
                         </div>                
                     </form>
                 </div>
-                <!-- link to show all -->
+                <!-- link to show all orders -->
                 <div class="me-2">
                     <a href="{{url_for('staff.list_orders')}}" class="btn btn-primary">
                         View All
@@ -41,6 +43,7 @@ Orders
             </div>
         {% endif %}        
     </div>
+    <!-- Table for displaying order list -->
     <div class="table-responsive me-4">
         <table class="table table-hover">
             <thead class="table-primary">
@@ -60,16 +63,20 @@ Orders
                     <td class="col text-center">{{ "Delivery" if order.is_delivery else "Pickup" }}</td>
                     <td class="col text-center">{{ order.status }}</td>
                     <td class="col text-start">
+                        <!-- This column displays different buttons based on user role -->
                         {% if role == 'staff' %}
+                            <!-- view order details -->
                             <a class="btn btn-primary btn-sm me-2"
                             href="{{ url_for('staff.view_order', order_id=order.id) }}">
                                 Details
                             </a>
+                            <!-- Update button for confirmed order that is not completed or cancelled -->
                             {% if order.status not in ('Pending', 'Completed', 'Cancelled') %}
                                 {% include 'staff/order/update.html' %}
                             {% endif %}
                         {% endif %}
                         {% if role in ('customer', 'corporate_customer') %}
+                            <!-- view order details -->
                             <a class="btn btn-primary btn-sm me-2"
                             href="{{ url_for('order.view_order', order_id=order.id) }}">
                                 Details
@@ -81,6 +88,7 @@ Orders
                                 Pay Now
                             </a>
                             {% endif %}
+                            <!-- Cancel button for order that is not fulfilled or cancelled -->
                             {% if order.status in ('Pending', 'Confirmed') %}
                                 {% include 'customer/order/cancel.html' %}
                             {% endif %}

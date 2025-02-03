@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+<!-- Template to display customer's profile -->
+{% extends "base.html" %}
 
 {% block title %}
 Profile
@@ -8,14 +9,14 @@ Profile
 <div class="container p-2">
     <div class="row mt-4">
         <div class="col-lg-8 mx-auto">
-            <!-- Display if user is logged in -->
+            <!-- Only display if user is logged in -->
             {% if username == user.username %}   
             <div class="card border-0">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">My Details</h4>
                 </div>
                 <div class="card-body">
-                    <!-- User Details List Group -->
+                    <!-- User Details -->
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">First Name: {{ user.first_name }}</li>
                         <li class="list-group-item">Family Name: {{ user.family_name }}</li>
@@ -23,7 +24,7 @@ Profile
                         <li class="list-group-item">Email: {{ user.email }}</li>
                         <li class="list-group-item">Address: {{ user.address }}</li>
                         <li class="list-group-item">Outstanding Balance: {{ user.balance }}</li>
-                        {% if role == 'corporate_customer' %}
+                        {% if role == "corporate_customer" %}
                         <li class="list-group-item">Company Name: {{ user.company_name }}</li>
                         <li class="list-group-item">Credit Limit: {{ user.credit_limit }}</li>
                         {% endif %}

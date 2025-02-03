@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+<!-- Template to display payment form -->
+{% extends "base.html" %}
 
 {% block title %}
 Payment
@@ -6,11 +7,12 @@ Payment
 
 {% block content %}
 <div class="container p-2">
-<!-- Payment section -->
 <div class="row mt-4">
     <div class="col-lg-6 mx-auto">
+    <!-- Title -->
     <h3 class="">Payment</h3>
     <div class="accordion" id="accordionPayment">
+        <!-- Accordian: Charge to account form -->
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -28,6 +30,7 @@ Payment
                 </div>
             </div>
         </div>
+        <!-- Accordian: Debit Card form -->
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -50,6 +53,7 @@ Payment
                         <div class="form-group mt-2">
                             <label for="card_no" class="form-label">Card Number</label> 
                             <input type="text" class="form-control" name="card_no" placeholder="1234 5678 9012 3457" id="card_no" minlength="19" maxlength="19" pattern="[\d ]{19}" required>
+                            <small class="text-body-secondary">Example: 1234 5678 1234 5678</small>
                         </div>
                         <div class="mt-2 d-flex justify-contain-center">
                             <button type="submit" class="btn btn-primary w-100"> 
@@ -60,6 +64,7 @@ Payment
                 </div>
             </div>
         </div>
+        <!-- Accordian: Credit Card form -->
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -82,6 +87,7 @@ Payment
 						<div class="form-group mt-2">
                             <label for="card_no" class="form-label">Card Number</label> 
                             <input class="form-control" type="text" name="card_no" placeholder="1234 5678 9012 3457" id="card_no" minlength="19" maxlength="19" pattern="[\d ]{19}" required>
+                            <small class="text-body-secondary">Example: 1234 5678 1234 5678</small>
                         </div>
                         <div class="form-group mt-2">
                             <label for="name" class="form-label">Name</label> 
@@ -96,12 +102,14 @@ Payment
                                     </div>
                                     <div class="col-auto">
                                     <input type="text" class="form-control" name="expiry" placeholder="MM/YY" size="5" id="expiry" minlength="5" maxlength="5" pattern="[0-9\/]{5}" required>
-                                    </div>   
+                                    </div>
+                                    <small class="text-body-secondary">MM/YY format</small>   
                                 </div>
                         		<div class="col-sm-6">
                                     <label for="cvv" class="form-label">CVV</label>
                                     <input type="password" class="form-control" name="cvv" id="cvv" placeholder="&#9679;&#9679;&#9679;" size="3" minlength="3" maxlength="3" pattern="[0-9]{3}" required>
-                        		</div>                        		
+                                    <small class="text-body-secondary">3 digits</small> 
+                                </div>                        		
                         	</div>
                         </div>
                         <div class="mt-2 d-flex justify-contain-center">
