@@ -1,24 +1,30 @@
+# This file contains the code to seed the database with test data.
 from database import db
 from hashing import hashing
 from datetime import datetime
-from models import Staff, order
-from models import Customer
-from models import CorporateCustomer
-from models import Order
-from models import OrderLine
-from models import PackVeggie
-from models import WeightedVeggie
-from models import UnitPriceVeggie
-from models import CreditCard, DebitCard
-from models import PremadeBox
-from models import VegetableProduct
-from models import PremadeBoxProduct
-from models import BoxComponent
+from models import (
+    Staff, 
+    Customer,
+    CorporateCustomer,
+    Order,
+    OrderLine,
+    PackVeggie,
+    WeightedVeggie,
+    UnitPriceVeggie,
+    CreditCard, 
+    DebitCard,
+    PremadeBox,
+    VegetableProduct,
+    PremadeBoxProduct,
+    BoxComponent
+)
 
+# Hash the password for all users before inserting into the database
 password = hashing.hash_value('Test123456', salt='abcd')
 
-# Load and parse a text file to create product objects
+
 def load_products(txt_file):
+    """! This function is used to load products from a text file and insert them into the database."""
     with open(txt_file, 'r') as file:
         products = []
         for line in file:
@@ -36,13 +42,17 @@ def load_products(txt_file):
             except ValueError as e:
                 print(f"Error converting line '{line.strip()}': {e}")
                 continue
-
+            
+            # Create a new VegetableProduct object and add it to the product list
             products.append(VegetableProduct(name=name, price=price, available=available, unit=unit))
+
+        # Add all products to the database
         db.session.add_all(products)
         db.session.commit()
 
-# Insert test data into the database
+
 def insert_test_data():
+    """! This function is used to insert test data into the database."""
 
     # Create empty list
     staffs = []
