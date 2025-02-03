@@ -1,13 +1,16 @@
-# Fresh Harvest Grocer Ordering App
+# Fresh Harvest Grocer Ordering App - Python Flask Web Application
 
 This is a software design and development project. The project follows object-oriented programming (OOP) principles and uses MVC (Model, View, Controller) architecture for its structure. 
 
-In this project, I learn to:
+### **Key Learning outcomes:**
 
-1. Design model classes 
-2. Use SQLAlchemy (Object Relational Mapper, ORM) to store the objects to MySQL database. 
-3. Generate program documentation using Doxygen.
-4. Error handling
+1. Front-end development (HTML, Jinja and Bootstrap CSS). 
+2. Back-End development (Python Flask, SQLAlchemy, MySQL).
+3. Design class model.
+4. Use SQLAlchemy to store objects in MySQL database.
+5. SQL Transaction.
+6. Implement error handling.
+7. Generate program documentation using Doxygen.
 
 PythonAnywhere: https://yctan.pythonanywhere.com/
 
